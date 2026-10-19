@@ -398,12 +398,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
               <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-[#00D4FF]"></div>
               <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-[#00D4FF]"></div>
 
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden border border-[#00D4FF]/60 flex items-center justify-center mb-1 sm:mb-2 shadow-[0_0_20px_rgba(0,212,255,0.35)] group-hover:shadow-[0_0_30px_rgba(0,212,255,0.6)] transition-all bg-[#0B1F3A]">
-                <img
-                  src={PORTFOLIO_DATA.profile.avatarUrl}
-                  alt={PORTFOLIO_DATA.profile.name}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-tr from-[#0B1F3A] to-[#0A1930] border border-[#00D4FF]/60 flex items-center justify-center mb-1 sm:mb-2 shadow-[0_0_20px_rgba(0,212,255,0.35)] group-hover:shadow-[0_0_30px_rgba(0,212,255,0.6)] transition-all">
+                <span className="font-mono text-xl sm:text-2xl font-black text-[#00D4FF] tracking-wider drop-shadow-[0_0_10px_rgba(0,212,255,0.5)]">
+                  AP
+                </span>
               </div>
               <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-[#F5F8FF] uppercase">ANSH PRATAP</span>
               <span className="text-[9px] sm:text-[10px] text-[#00D4FF] font-mono mt-0.5">Autonomous Core V2</span>
