@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: auto;
+  }
+  body {
+    background-color: #061329;
+    color: #F5F8FF;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+  section, [id] {
+    scroll-margin-top: 85px;
+  }
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace;
+}
+
+/* Custom glow borders and text gradients */
+.glow-cyan-border {
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.12);
+}
+
+.glow-cyan-border:hover {
+  border: 1px solid rgba(0, 212, 255, 0.8);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.25);
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #FFFFFF 20%, #00D4FF 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #00D4FF 0%, #1677FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Background high-tech circuit grid */
+.tech-grid-bg {
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.05) 0%, transparent 65%),
+    linear-gradient(to right, rgba(32, 59, 91, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(32, 59, 91, 0.2) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+}
+
+.tech-dots-bg {
+  background-image: radial-gradient(rgba(0, 212, 255, 0.18) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Cable connector dash flow animation */
+@keyframes connector-flow {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-cable-flow {
+  stroke-dasharray: 6 4;
+  animation: connector-flow 2s linear infinite;
+}
+
+.animate-cable-flow-fast {
+  stroke-dasharray: 5 3;
+  animation: connector-flow 1.2s linear infinite;
+}
+
+.animate-cable-flow-reverse {
+  stroke-dasharray: 6 4;
+  animation: connector-flow 2.4s linear infinite reverse;
+}
+
+/* Pulsing node glowing keyframes */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.6); }
+  70% { transform: scale(1); opacity: 0; box-shadow: 0 0 0 14px rgba(0, 212, 255, 0); }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Shimmer scanline effect */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+/* Floating element drift */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Revolving circle keyframes - spins continuously in place */
+@keyframes spin-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-counter {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes orbit-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+    opacity: 0.9;
+  }
+  50% {
+    filter: drop-shadow(0 0 24px rgba(0, 212, 255, 0.95));
+    opacity: 1;
+  }
+}
+
+.animate-revolving-slow {
+  animation: spin-clockwise 22s linear infinite;
+}
+
+.animate-revolving-medium {
+  animation: spin-clockwise 14s linear infinite;
+}
+
+.animate-revolving-fast {
+  animation: spin-clockwise 8s linear infinite;
+}
+
+.animate-revolving-reverse {
+  animation: spin-counter 18s linear infinite;
+}
+
+.animate-revolving-reverse-slow {
+  animation: spin-counter 28s linear infinite;
+}
+
+.animate-orbit-pulse {
+  animation: orbit-pulse 3s ease-in-out infinite;
+}
+
+/* Radar sweep animation */
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 8s linear infinite;
+}
+
+.radar-beam {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 240deg,
+    rgba(0, 212, 255, 0.04) 280deg,
+    rgba(0, 212, 255, 0.22) 360deg
+  );
+}
+
+@keyframes cyber-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+.animate-cyber-breathe {
+  animation: cyber-breathe 4s ease-in-out infinite;
+}
+
+/* Smooth custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #061329;
+}
+::-webkit-scrollbar-thumb {
+  background: #203B5B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00D4FF;
+}
