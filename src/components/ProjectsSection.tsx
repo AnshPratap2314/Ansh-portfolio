@@ -164,6 +164,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             alt={`${project.title} live interface preview`}
                             className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
+                            onError={(e) => {
+                              const img = e.currentTarget;
+                              if (!img.dataset.fallbackTried) {
+                                img.dataset.fallbackTried = "true";
+                                if (project.id === "interview") {
+                                  img.src = "/assets/images/interview_sim_live.png";
+                                } else if (project.id === "studyverse") {
+                                  img.src = "/assets/images/studyverse_live.png";
+                                } else if (project.id === "aishie") {
+                                  img.src = "/assets/images/aishie_voice_preview.jpg";
+                                }
+                              }
+                            }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#061329] via-transparent to-transparent opacity-40 pointer-events-none" />
                         </div>

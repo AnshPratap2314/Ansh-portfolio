@@ -1,3 +1,7 @@
+import interviewSimImg from '../assets/images/interview_sim_live.png';
+import studyverseImg from '../assets/images/studyverse_live.png';
+import aishieImg from '../assets/images/aishie_voice_preview.jpg';
+
 export interface Project {
   id: string;
   title: string;
@@ -262,7 +266,7 @@ export const PORTFOLIO_DATA = {
       ],
       githubUrl: "https://github.com/AnshPratap2314/ai-based-interview-simulator",
       demoUrl: "https://ai-based-interview-simulator-1.onrender.com",
-      imageUrl: "/src/assets/images/interview_os_screenshot_1791747513848.jpg",
+      imageUrl: interviewSimImg,
       isFlagship: true
     },
     {
@@ -285,7 +289,7 @@ export const PORTFOLIO_DATA = {
       ],
       githubUrl: "https://github.com/AnshPratap2314/StudyVerse-AI",
       demoUrl: "https://study-verse-ai-eight.vercel.app/",
-      imageUrl: "/src/assets/images/studyverse_dashboard_shot_1791747485510.jpg",
+      imageUrl: studyverseImg,
       isFlagship: true
     },
     {
@@ -329,7 +333,7 @@ export const PORTFOLIO_DATA = {
         "face_recognition"
       ],
       githubUrl: "https://github.com/AnshPratap2314/Aishie-AI-Assistant",
-      imageUrl: "/src/assets/images/aishie_voice_preview_1791744735856.jpg"
+      imageUrl: aishieImg
     }
   ],
 
