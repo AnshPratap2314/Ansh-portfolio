@@ -134,7 +134,7 @@ export const ContactSection: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-xs font-semibold tracking-widest text-[#00D4FF] uppercase">
-                06 — GET IN TOUCH
+                07 — GET IN TOUCH
               </span>
               <div className="h-px w-12 bg-[#00D4FF]/40" />
             </div>

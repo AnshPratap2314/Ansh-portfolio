@@ -57,6 +57,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
             <a href="#education" onClick={(e) => handleNavClick(e, "education")} className="hover:text-[#00D4FF] transition-colors cursor-pointer">
               Education
             </a>
+            <a href="#developer-stats" onClick={(e) => handleNavClick(e, "developer-stats")} className="hover:text-[#00D4FF] transition-colors cursor-pointer">
+              Stats
+            </a>
             <button
               onClick={onOpenResume}
               className="hover:text-[#00D4FF] transition-colors cursor-pointer text-left"

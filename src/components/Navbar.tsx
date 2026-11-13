@@ -23,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
     window.addEventListener("scroll", handleScrollThrottled, { passive: true });
 
     // High-performance IntersectionObserver for active link indicator
-    const sections = ["about", "skills", "projects", "experience", "education", "contact"];
+    const sections = ["about", "skills", "projects", "experience", "education", "developer-stats", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -66,6 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
     { label: "Projects", id: "projects" },
     { label: "Experience", id: "experience" },
     { label: "Education", id: "education" },
+    { label: "Stats", id: "developer-stats" },
     { label: "Contact", id: "contact" }
   ];
 

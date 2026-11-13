@@ -11,6 +11,7 @@ import { AboutSection } from "./components/AboutSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { ExperienceEducationSection } from "./components/ExperienceEducationSection";
+import { DeveloperStatsSection } from "./components/DeveloperStatsSection";
 import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 import { CaseStudyModal } from "./components/CaseStudyModal";
@@ -57,6 +58,7 @@ export default function App() {
             onOpenSkillPreview={(name) => setSelectedSkillPreview(name)}
           />
           <ExperienceEducationSection onOpenSkillPreview={(name) => setSelectedSkillPreview(name)} />
+          <DeveloperStatsSection />
           <ContactSection />
         </main>
 

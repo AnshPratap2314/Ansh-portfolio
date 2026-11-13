@@ -1,34 +1,154 @@
 import React, { useState } from "react";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
 import { generateAndDownloadResumePdf } from "../utils/generateResumePdf";
+import resumePdfUrl from "../assets/Ansh_Pratap_Resume.pdf";
 
 interface ResumeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const RESUME_EXPERIENCE = [
+  {
+    id: "renan",
+    role: "Artificial Intelligence Data Operations Intern",
+    company: "Renan Partners Private Limited",
+    period: "Nov 2026 – Present",
+    bullets: [
+      "Completing assigned AI data operations deliverables for the Project Delivery team to quality standards and timelines.",
+      "Working remotely under the Project Lead, following project requirements and communication protocols.",
+    ],
+  },
+  {
+    id: "istudio",
+    role: "Artificial Intelligence Intern",
+    company: "Internship Studio (iStudio)",
+    period: "Oct 2025 – Jan 2026",
+    bullets: [
+      "Redesigned LLM prompt templates to enforce a structured output schema, eliminating a manual post-processing step.",
+      "Automated recurring manual data-preprocessing steps in the training pipeline using Python.",
+      "Ran exploratory data analysis that surfaced label noise and class imbalance, informing a model architecture revision.",
+    ],
+  },
+  {
+    id: "cttc",
+    role: "AI & ML Industrial Trainee",
+    company: "Central Tool Room & Training Centre (CTTC), Bhubaneswar",
+    period: "Apr 2025 – May 2025",
+    bullets: [
+      "Completed 1-month industrial training in Python, supervised/unsupervised learning, NLP, computer vision, and Keras.",
+      "Built a face detection and recognition attendance system with OpenCV, SVM, and LBPH on a self-collected dataset.",
+      "Benchmarked four classifiers (SVM, KNN, Decision Tree, Neural Network) on identical data, weighing accuracy and inference speed.",
+    ],
+  },
+];
+
+const RESUME_PROJECTS = [
+  {
+    id: "mindcare",
+    title: "MindCare AI",
+    subtitle: "Safety-Oriented Mental Health Support Chatbot",
+    tech: "Python, FastAPI, scikit-learn, TF-IDF, Logistic Regression, Joblib, JavaScript, Docker, Render",
+    liveUrl: "https://mindcare-ai-o1e5.onrender.com",
+    githubUrl: "https://github.com/AnshPratap2314/AI-Mental-health-chatbot",
+    bullets: [
+      "Trained TF-IDF + Logistic Regression models (Joblib) on a 50,000-example synthetic dataset for intent, mood, topic, and risk classification. Not clinically validated and not a diagnostic tool.",
+      "Designed a safety layer where rule-based risk analysis takes precedence over LLM-generated responses; wrote automated tests.",
+      "Built a FastAPI backend with session handling and API safeguards behind an HTML/CSS/JavaScript chat interface; added Docker configuration and deployed on Render.",
+    ],
+  },
+  {
+    id: "interview",
+    title: "AI Interview Simulator",
+    subtitle: "AI Interview Preparation OS",
+    tech: "Python, FastAPI, Pydantic, SQLite, Google Gemini API, JavaScript, Pytest, Render",
+    liveUrl: "https://ai-based-interview-simulator-1.onrender.com",
+    githubUrl: "https://github.com/AnshPratap2314/ai-based-interview-simulator",
+    bullets: [
+      "Integrated the Google Gemini API to generate questions across 3 interview tracks (Technical, HR, AI/ML) and 3 difficulty levels, and to evaluate candidate answers using validated structured output.",
+      "Built FastAPI REST endpoints with Pydantic validation, SQLite persistence for sessions and candidate history, and session/candidate token handling.",
+      "Wrote a Pytest backend test suite and setup documentation; deployed the application on Render.",
+    ],
+  },
+  {
+    id: "studyverse",
+    title: "StudyVerse AI",
+    subtitle: "AI Learning and Productivity Workspace (team project)",
+    tech: "Node.js, Express.js, MongoDB (Mongoose), JavaScript, Google GenAI SDK",
+    liveUrl: "https://study-verse-ai-eight.vercel.app/",
+    githubUrl: "https://github.com/AnshPratap2314/StudyVerse-AI",
+    bullets: [
+      "Contributed to a team-built full-stack application with user accounts, an AI tutor, AI-generated study packs, flashcards, and quizzes.",
+      "Contributed to an AI provider gateway (adapters, fallback handling) and document-processing/retrieval modules.",
+    ],
+  },
+  {
+    id: "aishie",
+    title: "Aishie",
+    subtitle: "Voice-Controlled Desktop AI Assistant (prototype)",
+    tech: "Python, SpeechRecognition, pyttsx3, AppleScript, PyAutoGUI, OpenCV, face_recognition",
+    githubUrl: "https://github.com/AnshPratap2314/Aishie-AI-Assistant",
+    bullets: [
+      "Prototyped a Python voice assistant (SpeechRecognition, pyttsx3) with macOS automation (AppleScript, PyAutoGUI), face recognition (OpenCV, face_recognition), local JSON memory, and messaging integrations.",
+    ],
+  },
+];
+
+const RESUME_CERTIFICATIONS = [
+  { title: "Google AI Essentials", issuer: "Google (Coursera)", date: "Aug 2026" },
+  { title: "Google Prompting Essentials", issuer: "Google (Coursera)", date: "Sep 2026" },
+  { title: "Artificial Intelligence Fundamentals", issuer: "IBM SkillsBuild", date: "Oct 2026" },
+  { title: "Data Science & Analytics", issuer: "HP LIFE", date: "Sep 2025" },
+];
+
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  const { profile, experience, projects, certifications } = PORTFOLIO_DATA;
+  const { profile } = PORTFOLIO_DATA;
 
   if (!isOpen) return null;
 
   const handleCopySummary = () => {
-    const summary = `${profile.name} — ${profile.title}\n${profile.email} | ${profile.githubUrl}\n\nEDUCATION:\n${profile.education.degree} (${profile.education.institution})\nCGPA: ${profile.education.cgpa} | Expected: ${profile.education.expectedGraduation}\n\nCORE STACK:\nPython, FastAPI, Scikit-learn, Google Gemini API, Pytest (238 suites), OpenCV, Docker\n\nFEATURED WORK:\n1. MindCare AI — NLP Mental Health Assistant (FastAPI, 238 Pytest cases)\n2. AI Interview Simulator — Structured Gemini API Evaluation\n3. StudyVerse AI — RAG Document Intelligence Platform`;
+    const summary = `${profile.name} — Final-Year B.Tech CSE | AI/ML & Generative AI | Python, FastAPI, LLM Applications
++91 9520458452 | ${profile.email} | ${profile.githubUrl}
+
+PROFESSIONAL SUMMARY:
+Final-year B.Tech CSE student (graduating 2027) with a 3-month AI internship and hands-on experience building ML and LLM-powered applications in Python. Redesigned LLM prompts for structured output, trained TF-IDF/Logistic Regression classifiers, built OpenCV face recognition, and integrated the Gemini API into a deployed FastAPI app.
+
+INTERNSHIP EXPERIENCE:
+1. Artificial Intelligence Data Operations Intern | Renan Partners Private Limited (Nov 2026 – Present)
+2. Artificial Intelligence Intern | Internship Studio (iStudio) (Oct 2025 – Jan 2026)
+3. AI & ML Industrial Trainee | CTTC Bhubaneswar (Apr 2025 – May 2025)
+
+EDUCATION:
+B.Tech, Computer Science and Engineering | Mewar University, Chittorgarh, Rajasthan (2023 – 2027 Expected)`;
     navigator.clipboard.writeText(summary);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = async () => {
     try {
       setIsDownloading(true);
-      generateAndDownloadResumePdf();
-      setTimeout(() => setIsDownloading(false), 800);
+      const response = await fetch(resumePdfUrl);
+      const contentType = response.headers.get("content-type") || "";
+      if (!response.ok || !contentType.includes("pdf")) {
+        throw new Error(`Unexpected response: HTTP ${response.status} (${contentType})`);
+      }
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "Ansh_Pratap_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
     } catch (err) {
-      console.warn("PDF download error:", err);
-      setIsDownloading(false);
+      console.warn("Bundled PDF download fallback:", err);
+      generateAndDownloadResumePdf();
+    } finally {
+      setTimeout(() => setIsDownloading(false), 600);
     }
   };
 
@@ -55,7 +175,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 {profile.name} — CV
               </h2>
               <p className="text-[10px] sm:text-xs font-mono text-[#00D4FF] truncate">
-                {profile.title} · {profile.education.status}
+                AI/ML &amp; Generative AI · Final-Year B.Tech CSE
               </p>
             </div>
           </div>
@@ -93,84 +213,95 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Resume Content Body */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-8 flex-1 text-xs sm:text-sm text-[#B4C3D8]">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-7 flex-1 text-xs sm:text-sm text-[#B4C3D8]">
           {/* Header block */}
-          <div className="border-b border-[#203B5B]/60 pb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="border-b border-[#203B5B]/60 pb-5">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-extrabold text-[#F5F8FF]">{profile.name}</h1>
-                <p className="text-sm font-semibold text-[#00D4FF] mt-0.5">
-                  AI/ML &amp; Generative AI Developer · B.Tech CSE (Expected 2027)
+                <h1 className="text-2xl font-extrabold text-[#F5F8FF] tracking-tight">ANSH PRATAP</h1>
+                <p className="text-xs sm:text-sm font-semibold text-[#00D4FF] mt-1">
+                  Final-Year B.Tech CSE | AI/ML &amp; Generative AI | Python, FastAPI, LLM Applications
+                </p>
+                <p className="text-xs text-[#8EA3BE] mt-1 font-mono">
+                  Chittorgarh, Rajasthan, India · +91 9520458452 · {profile.email}
                 </p>
               </div>
-              <div className="font-mono text-xs text-[#8EA3BE] space-y-1 sm:text-right">
-                <p>{profile.email}</p>
-                <p>{profile.location}</p>
+              <div className="font-mono text-xs text-[#8EA3BE] space-y-1 sm:text-right shrink-0">
+                <p>
+                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="text-[#00D4FF] hover:underline">
+                    linkedin.com/in/ansh-pratap-68156625b
+                  </a>
+                </p>
                 <p>
                   <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="text-[#00D4FF] hover:underline">
                     github.com/AnshPratap2314
+                  </a>
+                </p>
+                <p>
+                  <a href="https://ansh-portfolio-rho-seven.vercel.app" target="_blank" rel="noreferrer" className="text-[#00D4FF] hover:underline">
+                    ansh-portfolio-rho-seven.vercel.app
                   </a>
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Education */}
-          <div className="space-y-3">
+          {/* Professional Summary */}
+          <div className="space-y-2">
             <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
-              EDUCATION
+              PROFESSIONAL SUMMARY
             </h3>
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
-              <div>
-                <div className="font-bold text-[#F5F8FF] text-sm">{profile.education.institution}</div>
-                <div className="text-xs text-[#00D4FF]">{profile.education.degree}</div>
-                <p className="text-xs text-[#8EA3BE] mt-1">{profile.education.curriculum}</p>
-              </div>
-              <div className="font-mono text-xs text-[#8EA3BE] shrink-0 sm:text-right">
-                <div>CGPA: {profile.education.cgpa}</div>
-                <div>Graduation: {profile.education.expectedGraduation}</div>
-              </div>
-            </div>
+            <p className="text-xs leading-relaxed text-[#B4C3D8]">
+              Final-year B.Tech CSE student (graduating 2027) with a 3-month AI internship and hands-on experience building ML and LLM-powered applications in Python. Redesigned LLM prompts for structured output, trained TF-IDF/Logistic Regression classifiers, built OpenCV face recognition, and integrated the Gemini API into a deployed FastAPI app.
+            </p>
           </div>
 
-          {/* Core Skills */}
-          <div className="space-y-3">
+          {/* Technical Skills */}
+          <div className="space-y-2.5">
             <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
-              CORE TECHNICAL COMPETENCIES
+              TECHNICAL SKILLS
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div>
-                <span className="font-semibold text-[#F5F8FF]">Machine Learning &amp; AI:</span>
-                <p className="text-[#8EA3BE] mt-0.5">Scikit-learn, NumPy, Pandas, TF-IDF, Logistic Regression, OpenCV, NLP</p>
+                <span className="font-semibold text-[#F5F8FF]">Programming:</span>
+                <p className="text-[#8EA3BE] mt-0.5">Python, JavaScript, C, C++, SQL</p>
               </div>
               <div>
                 <span className="font-semibold text-[#F5F8FF]">Generative AI:</span>
-                <p className="text-[#8EA3BE] mt-0.5">Google Gemini API, Prompt Engineering, Structured LLM Outputs, RAG</p>
+                <p className="text-[#8EA3BE] mt-0.5">Google Gemini API, LLM Integration, Prompt Engineering, Structured Output Handling, RAG (fundamentals)</p>
               </div>
               <div>
-                <span className="font-semibold text-[#F5F8FF]">Backend &amp; Infrastructure:</span>
-                <p className="text-[#8EA3BE] mt-0.5">Python 3.12, FastAPI, Pydantic, REST APIs, Docker, Linux, Render Cloud</p>
+                <span className="font-semibold text-[#F5F8FF]">ML &amp; Data:</span>
+                <p className="text-[#8EA3BE] mt-0.5">Scikit-learn, NLP, TF-IDF, Logistic Regression, Text Classification, OpenCV, Computer Vision, Keras, NumPy, Pandas</p>
               </div>
               <div>
-                <span className="font-semibold text-[#F5F8FF]">Quality Assurance:</span>
-                <p className="text-[#8EA3BE] mt-0.5">Pytest (238 automated regression test suites), Git &amp; GitHub, CI workflows</p>
+                <span className="font-semibold text-[#F5F8FF]">Backend &amp; APIs:</span>
+                <p className="text-[#8EA3BE] mt-0.5">FastAPI, REST APIs, Pydantic, Node.js, Express.js, Input Validation, Session Management</p>
+              </div>
+              <div>
+                <span className="font-semibold text-[#F5F8FF]">Databases:</span>
+                <p className="text-[#8EA3BE] mt-0.5">SQLite, MongoDB (Mongoose)</p>
+              </div>
+              <div>
+                <span className="font-semibold text-[#F5F8FF]">Testing &amp; Tools:</span>
+                <p className="text-[#8EA3BE] mt-0.5">Pytest, Node.js Test Runner, Git, GitHub, Uvicorn, Render, Docker (basic configuration), VS Code</p>
               </div>
             </div>
           </div>
 
-          {/* Work Experience */}
+          {/* Internship Experience */}
           <div className="space-y-4">
             <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
-              APPLIED INDUSTRY EXPERIENCE
+              INTERNSHIP EXPERIENCE
             </h3>
-            {experience.map((exp) => (
+            {RESUME_EXPERIENCE.map((exp) => (
               <div key={exp.id} className="space-y-1">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
                   <div>
                     <span className="font-bold text-[#F5F8FF] text-sm">{exp.role}</span>
-                    <span className="text-[#00D4FF] font-medium ml-2">@ {exp.company}</span>
+                    <span className="text-[#00D4FF] font-medium ml-2">| {exp.company}</span>
                   </div>
-                  <span className="font-mono text-[#8EA3BE]">{exp.period}</span>
+                  <span className="font-mono text-[#8EA3BE] shrink-0">{exp.period}</span>
                 </div>
                 <ul className="space-y-1 mt-1 text-xs text-[#B4C3D8]">
                   {exp.bullets.map((b, bIdx) => (
@@ -184,44 +315,80 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             ))}
           </div>
 
-          {/* Featured Projects */}
+          {/* Selected Projects */}
           <div className="space-y-4">
             <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
-              FLAGSHIP ENGINEERING PROJECTS
+              SELECTED PROJECTS
             </h3>
-            {projects.slice(0, 3).map((proj) => (
-              <div key={proj.id} className="space-y-1 text-xs">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+            {RESUME_PROJECTS.map((proj) => (
+              <div key={proj.id} className="space-y-1.5 text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div className="font-bold text-[#F5F8FF]">
                     {proj.title} <span className="text-[#8EA3BE] font-normal">— {proj.subtitle}</span>
                   </div>
-                  <a
-                    href={proj.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-mono text-[#00D4FF] hover:underline"
-                  >
-                    GitHub Code ↗
-                  </a>
+                  <div className="flex items-center gap-3 font-mono shrink-0">
+                    {proj.liveUrl && (
+                      <a
+                        href={proj.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-emerald-400 hover:underline"
+                      >
+                        Live ↗
+                      </a>
+                    )}
+                    <a
+                      href={proj.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#00D4FF] hover:underline"
+                    >
+                      GitHub ↗
+                    </a>
+                  </div>
                 </div>
-                <p className="text-[#B4C3D8]">{proj.approach}</p>
                 <div className="font-mono text-[11px] text-[#8EA3BE]">
-                  Tech Stack: {proj.tags.join(", ")}
+                  Tech: {proj.tech}
                 </div>
+                <ul className="space-y-1 text-xs text-[#B4C3D8]">
+                  {proj.bullets.map((b, bIdx) => (
+                    <li key={bIdx} className="flex items-start gap-1.5">
+                      <span className="text-[#00D4FF]">▹</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
+          </div>
+
+          {/* Education */}
+          <div className="space-y-2">
+            <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
+              EDUCATION
+            </h3>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+              <div>
+                <span className="font-bold text-[#F5F8FF] text-sm">B.Tech, Computer Science and Engineering</span>
+                <span className="text-[#00D4FF] ml-2">| Mewar University, Chittorgarh, Rajasthan</span>
+              </div>
+              <span className="font-mono text-[#8EA3BE] shrink-0">2023 – 2027 (Expected)</span>
+            </div>
           </div>
 
           {/* Certifications */}
           <div className="space-y-3">
             <h3 className="font-mono text-xs font-bold text-[#00D4FF] tracking-wider uppercase border-b border-[#203B5B]/40 pb-1">
-              KEY CERTIFICATIONS &amp; CREDENTIALS
+              CERTIFICATIONS
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-              {certifications.slice(0, 6).map((cert, cIdx) => (
-                <div key={cIdx} className="p-2 rounded bg-[#061329] border border-[#203B5B]/60">
-                  <div className="font-semibold text-[#F5F8FF]">{cert.title}</div>
-                  <div className="text-[11px] text-[#00D4FF] font-mono">{cert.issuer} {cert.year ? `· ${cert.year}` : ""}</div>
+              {RESUME_CERTIFICATIONS.map((cert, cIdx) => (
+                <div key={cIdx} className="p-2.5 rounded bg-[#061329] border border-[#203B5B]/60 flex items-center justify-between gap-2">
+                  <div>
+                    <div className="font-semibold text-[#F5F8FF]">{cert.title}</div>
+                    <div className="text-[11px] text-[#00D4FF] font-mono">{cert.issuer}</div>
+                  </div>
+                  <span className="text-[11px] font-mono text-[#8EA3BE] shrink-0">{cert.date}</span>
                 </div>
               ))}
             </div>
@@ -230,7 +397,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
         {/* Footer */}
         <div className="p-3.5 sm:p-4 bg-[#0D203B] border-t border-[#203B5B] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-[#8EA3BE]">
-          <span>Mewar University · Expected B.Tech CSE 2027</span>
+          <span>Mewar University · B.Tech CSE 2023 – 2027</span>
           <div className="flex items-center gap-2 justify-end">
             <button
               type="button"
@@ -241,7 +408,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span>{isDownloading ? "Generating PDF..." : "Download Resume (PDF)"}</span>
+              <span>{isDownloading ? "Downloading PDF..." : "Download Resume (PDF)"}</span>
             </button>
             <button
               type="button"

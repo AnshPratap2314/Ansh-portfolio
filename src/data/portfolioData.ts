@@ -360,9 +360,23 @@ export const PORTFOLIO_DATA = {
 
   experience: [
     {
+      id: "renan",
+      period: "Nov 2026 – Present",
+      isRecent: true,
+      role: "Artificial Intelligence Data Operations Intern",
+      company: "Renan Partners Private Limited",
+      location: "Remote",
+      bullets: [
+        "Selected for the Project Delivery team on a 30-working-day remote internship executing AI data operations and dataset preparation.",
+        "Managing data quality assurance, annotation consistency, and structured deliverables in accordance with company quality standards and timelines.",
+        "Collaborating under the Project Lead to support active AI project delivery while adhering to strict data governance and confidentiality protocols."
+      ],
+      tags: ["AI Data Operations", "Data Quality", "Python", "Project Delivery"]
+    },
+    {
       id: "istudio",
       period: "Oct 2025 – Jan 2026",
-      isRecent: true,
+      isRecent: false,
       role: "Artificial Intelligence Intern",
       company: "iStudio",
       location: "Remote",
@@ -386,19 +400,6 @@ export const PORTFOLIO_DATA = {
         "Benchmarked SVM, KNN, Decision Trees and baseline neural networks; implemented and evaluated Local Binary Patterns Histograms (LBPH)."
       ],
       tags: ["OpenCV", "LBPH", "Scikit-learn", "Model Benchmarking"]
-    },
-    {
-      id: "codealpha",
-      period: "2025",
-      isRecent: false,
-      role: "Frontend Development Intern",
-      company: "CodeAlpha",
-      location: "Remote",
-      bullets: [
-        "Built a responsive multi-page web application conforming strictly to modular layout practices.",
-        "Applied lazy loading and asset optimisation, noticeably improving mobile first-paint time (as documented on my GitHub profile)."
-      ],
-      tags: ["Responsive UI", "JavaScript", "Web Standards"]
     }
   ],
 
