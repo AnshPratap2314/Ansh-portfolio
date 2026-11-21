@@ -63,7 +63,7 @@ export const generateAndDownloadResumePdf = (): void => {
   doc.setFontSize(8.5);
   doc.setTextColor(40, 45, 55);
   const bioLines = doc.splitTextToSize(
-    "Final-year B.Tech CSE student (graduating 2027) with a 3-month AI internship and hands-on experience building ML and LLM-powered applications in Python. Redesigned LLM prompts for structured output, trained TF-IDF/Logistic Regression classifiers, built OpenCV face recognition, and integrated the Gemini API into a deployed FastAPI app.",
+    "Final-year B.Tech Computer Science and Engineering student (expected graduation 2027) with practical AI/ML and Generative AI experience gained through a 3-month AI internship, an AI & ML industrial training program, and a current AI data operations internship. Builds and deploys Python and FastAPI applications that integrate LLMs through the Google Gemini API, with structured-output prompt design. Has developed machine learning models using TF-IDF and Logistic Regression and built an OpenCV-based face recognition system.",
     contentWidth
   );
   doc.text(bioLines, margin, y);
@@ -72,12 +72,13 @@ export const generateAndDownloadResumePdf = (): void => {
   // 3. Technical Skills
   drawSectionHeader("Technical Skills");
   const skillCategories = [
-    { label: "Programming", value: "Python, JavaScript, C, C++, SQL" },
-    { label: "Generative AI", value: "Google Gemini API, LLM Integration, Prompt Engineering, Structured Output Handling, RAG (fundamentals)" },
-    { label: "ML & Data", value: "Scikit-learn, NLP, TF-IDF, Logistic Regression, Text Classification, OpenCV, Computer Vision, Keras, NumPy, Pandas" },
-    { label: "Backend & APIs", value: "FastAPI, REST APIs, Pydantic, Node.js, Express.js, Input Validation, Session Management" },
-    { label: "Databases", value: "SQLite, MongoDB (Mongoose)" },
-    { label: "Testing & Tools", value: "Pytest, Node.js Test Runner, Git, GitHub, Uvicorn, Render, Docker (basic configuration), VS Code" }
+    { label: "Programming Languages", value: "Python, JavaScript, C, C++, SQL, HTML, CSS" },
+    { label: "AI/ML & Data Science", value: "Machine Learning, NLP, Scikit-learn, TF-IDF, Logistic Regression, Text Classification, SVM, KNN, Decision Trees, Neural Networks, Computer Vision, OpenCV, Keras, NumPy, Pandas" },
+    { label: "Generative AI & LLMs", value: "Google Gemini API, Google GenAI SDK, LLM Integration, Prompt Engineering, Structured Output Handling, RAG (Fundamentals)" },
+    { label: "Backend & API Engineering", value: "FastAPI, REST API Development, Node.js, Express.js, Pydantic, Input Validation, Session Management, API Security & Documentation" },
+    { label: "AI Engineering", value: "AI/ML Integration, API Development" },
+    { label: "Databases", value: "SQLite, MongoDB, Mongoose" },
+    { label: "Testing, Deployment & Tools", value: "Pytest, Node.js Test Runner, Git, GitHub, Uvicorn, Render, Docker (basic configuration), VS Code" }
   ];
 
   skillCategories.forEach((sc) => {

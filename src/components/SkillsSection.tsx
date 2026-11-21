@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
+import { useTheme } from "../context/ThemeContext";
 import { fastScrollTo } from "../utils/scrollHelper";
 import { InteractiveSkillTag } from "./InteractiveSkillTag";
 
@@ -10,7 +11,7 @@ interface SkillsSectionProps {
 
 export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview }) => {
   const [filter, setFilter] = useState<string>("all");
-  const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const { isDark } = useTheme();
 
   const skillCategories = PORTFOLIO_DATA.skills;
 
@@ -21,7 +22,6 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
     { id: "backend", label: "Backend & Systems" },
   ];
 
-  // Flat list of all premier tools for the continuous infinite marquee line
   const marqueeTools = [
     { name: "Python 3.11", tag: "Primary Language" },
     { name: "Scikit-Learn", tag: "NLP & ML" },
@@ -39,7 +39,6 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
     { name: "Eigenfaces & PCA", tag: "Dimensionality Reduction" },
   ];
 
-  // Repeat 4x to guarantee a gapless marquee across wide monitors
   const repeatedMarqueeTools = [...marqueeTools, ...marqueeTools, ...marqueeTools, ...marqueeTools];
 
   const containerVariants = {
@@ -62,10 +61,10 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
   };
 
   return (
-    <section id="skills" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-[#203B5B]/50 tech-grid-bg relative overflow-hidden">
-      {/* Ambient background GPU-optimized glow orb with div motion */}
+    <section id="skills" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-[#CBD6E6] dark:border-[#203B5B]/50 tech-grid-bg relative overflow-hidden">
+      {/* Ambient background glow orb */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(0,212,255,0.06)_0%,transparent_70%)] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(3,105,161,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(0,212,255,0.06)_0%,transparent_70%)] pointer-events-none"
         animate={{
           scale: [1, 1.15, 1],
           opacity: [0.4, 0.75, 0.4],
@@ -87,14 +86,14 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
       >
         <div>
           <div className="flex items-center gap-3 mb-3">
-            <span className="font-mono text-xs font-semibold tracking-widest text-[#00D4FF] uppercase">
+            <span className="font-mono text-xs font-semibold tracking-widest text-[#0369A1] dark:text-[#00D4FF] uppercase">
               02 — SKILLS &amp; ARCHITECTURE
             </span>
-            
+
             {/* Moving Line with Marquee Laser Scanner Motion */}
-            <div className="relative h-1 w-40 sm:w-56 bg-[#203B5B]/70 rounded-full overflow-hidden shadow-inner">
+            <div className="relative h-1 w-40 sm:w-56 bg-[#CBD6E6] dark:bg-[#203B5B]/70 rounded-full overflow-hidden shadow-inner">
               <motion.div
-                className="absolute top-0 bottom-0 w-24 bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent shadow-[0_0_15px_#00D4FF]"
+                className="absolute top-0 bottom-0 w-24 bg-gradient-to-r from-transparent via-[#0369A1] dark:via-[#00D4FF] to-transparent dark:shadow-[0_0_15px_#00D4FF]"
                 animate={{
                   x: [-100, 240],
                 }}
@@ -107,16 +106,16 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
             </div>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#F5F8FF] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#09111E] dark:text-[#F5F8FF] tracking-tight">
             Technical Arsenal.
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-[#B4C3D8] max-w-2xl leading-relaxed">
+          <p className="mt-2 text-sm sm:text-base text-[#2B3B52] dark:text-[#B4C3D8] max-w-2xl leading-relaxed">
             A production-proven stack developed across training NLP classifiers, structured LLM pipelines, and high-concurrency FastAPI microservices.
           </p>
         </div>
 
-        {/* Filter Pills with animated layoutId motion */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 p-1.5 rounded-xl bg-[#09182E] border border-[#203B5B]/80 shadow-lg w-full sm:w-auto">
+        {/* Filter Controls */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 p-1.5 rounded-xl bg-[#EAF0F8] dark:bg-[#09182E] border border-[#CBD6E6] dark:border-[#203B5B]/80 shadow-sm dark:shadow-lg w-full sm:w-auto">
           {filterTabs.map((tab) => {
             const isActive = filter === tab.id;
             return (
@@ -126,13 +125,15 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 className={`relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-mono transition-colors cursor-pointer select-none flex-1 sm:flex-initial text-center ${
-                  isActive ? "text-[#061329] font-bold" : "text-[#8EA3BE] hover:text-[#F5F8FF]"
+                  isActive
+                    ? "text-white dark:text-[#061329] font-bold"
+                    : "text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#09111E] dark:hover:text-[#F5F8FF]"
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeSkillTab"
-                    className="absolute inset-0 bg-gradient-to-r from-[#00D4FF] to-[#38bdf8] rounded-lg shadow-[0_0_15px_rgba(0,212,255,0.5)]"
+                    className="absolute inset-0 bg-gradient-to-r from-[#0369A1] to-[#0284C7] dark:from-[#00D4FF] dark:to-[#38bdf8] rounded-lg shadow-md dark:shadow-[0_0_15px_rgba(0,212,255,0.5)]"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -143,13 +144,11 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
         </div>
       </motion.div>
 
-      {/* CONTINUOUS MOVING MARQUEE LINE OF TOOLS WITH MOTION.DIV */}
-      <div className="w-full mb-12 rounded-xl bg-[#08182E] border border-[#203B5B]/80 p-2.5 overflow-hidden relative shadow-inner">
-        {/* Subtle Edge Gradients for Smooth Visual Transitions */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#08182E] to-transparent z-10" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#08182E] to-transparent z-10" />
+      {/* CONTINUOUS MOVING MARQUEE LINE OF TOOLS */}
+      <div className="w-full mb-12 rounded-xl bg-[#EAF0F8] dark:bg-[#08182E] border border-[#CBD6E6] dark:border-[#203B5B]/80 p-2.5 overflow-hidden relative shadow-inner">
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#EAF0F8] dark:from-[#08182E] to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#EAF0F8] dark:from-[#08182E] to-transparent z-10" />
 
-        {/* Moving Marquee Track */}
         <motion.div
           className="flex items-center gap-4 whitespace-nowrap will-change-transform"
           animate={{ x: ["0%", "-50%"] }}
@@ -163,11 +162,11 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
             <motion.div
               key={idx}
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0D203B] border border-[#203B5B] text-xs font-mono text-[#F5F8FF] shrink-0 hover:border-[#00D4FF]/60 transition-colors shadow-sm cursor-default"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white dark:bg-[#0D203B] border border-[#CBD6E6] dark:border-[#203B5B] text-xs font-mono text-[#09111E] dark:text-[#F5F8FF] shrink-0 hover:border-[#0369A1] dark:hover:border-[#00D4FF]/60 transition-colors shadow-sm cursor-default"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] shadow-[0_0_8px_#00D4FF]" />
-              <span className="font-semibold text-white">{tool.name}</span>
-              <span className="text-[10px] text-[#8EA3BE] bg-[#061329] px-1.5 py-0.5 rounded border border-[#203B5B]/50">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0369A1] dark:bg-[#00D4FF] dark:shadow-[0_0_8px_#00D4FF]" />
+              <span className="font-semibold text-[#09111E] dark:text-white">{tool.name}</span>
+              <span className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE] bg-[#F4F7FB] dark:bg-[#061329] px-1.5 py-0.5 rounded border border-[#CBD6E6] dark:border-[#203B5B]/50">
                 {tool.tag}
               </span>
             </motion.div>
@@ -175,7 +174,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
         </motion.div>
       </div>
 
-      {/* Grid of Skill Categories with div motion */}
+      {/* Grid of Skill Categories */}
       <AnimatePresence mode="wait">
         <motion.div
           key={filter}
@@ -200,27 +199,31 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
                 whileHover={{
                   y: -6,
                   scale: 1.015,
-                  borderColor: "rgba(0, 212, 255, 0.6)",
-                  boxShadow: "0 15px 35px -5px rgba(0, 212, 255, 0.18)",
+                  borderColor: isDark ? "rgba(0, 212, 255, 0.6)" : "rgba(3, 105, 161, 0.55)",
+                  boxShadow: isDark
+                    ? "0 15px 35px -5px rgba(0, 212, 255, 0.18)"
+                    : "0 18px 34px -10px rgba(3, 105, 161, 0.18), 0 4px 12px rgba(15, 23, 42, 0.06)",
                 }}
                 transition={{ duration: 0.3 }}
-                className={`rounded-2xl bg-[#0D203B]/85 border border-[#203B5B] p-6 transition-all duration-300 flex flex-col justify-between group shadow-xl relative z-10 hover:z-20 ${
-                  group.isFullWidth ? "md:col-span-2 lg:col-span-3 bg-gradient-to-r from-[#0D203B] via-[#0B1E38] to-[#0A1A32]" : ""
+                className={`rounded-2xl bg-white dark:bg-[#0D203B]/85 border border-[#CBD6E6] dark:border-[#203B5B] p-6 transition-all duration-300 flex flex-col justify-between group shadow-md dark:shadow-xl relative z-10 hover:z-20 ${
+                  group.isFullWidth
+                    ? "md:col-span-2 lg:col-span-3 bg-gradient-to-r from-white via-[#F4F7FB] to-[#EAF0F8] dark:from-[#0D203B] dark:via-[#0B1E38] dark:to-[#0A1A32]"
+                    : ""
                 }`}
               >
                 {/* Dynamic animated top edge scanner beam */}
                 <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden rounded-t-2xl pointer-events-none">
                   <motion.div
-                    className="h-full w-full bg-gradient-to-r from-transparent via-[#00D4FF]/40 to-transparent group-hover:via-[#00D4FF] transition-all duration-500"
+                    className="h-full w-full bg-gradient-to-r from-transparent via-[#0369A1]/40 dark:via-[#00D4FF]/40 to-transparent group-hover:via-[#0369A1] dark:group-hover:via-[#00D4FF] transition-all duration-500"
                   />
                 </div>
 
                 <div>
                   {/* Category Header */}
                   <div className={`mb-4 ${group.isFullWidth ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3" : "space-y-2.5"}`}>
-                    <h3 className="font-mono text-sm sm:text-[15px] font-bold text-[#F5F8FF] tracking-wide flex items-center gap-2.5">
+                    <h3 className="font-mono text-sm sm:text-[15px] font-bold text-[#09111E] dark:text-[#F5F8FF] tracking-wide flex items-center gap-2.5">
                       <motion.span
-                        className="w-2 h-2 rounded-full bg-[#00D4FF] shrink-0"
+                        className="w-2 h-2 rounded-full bg-[#0369A1] dark:bg-[#00D4FF] shrink-0"
                         animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
                         transition={{ duration: 2.2, repeat: Infinity, delay: idx * 0.2 }}
                       />
@@ -231,7 +234,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
                       <div className="flex items-center">
                         <motion.span
                           whileHover={{ scale: 1.03 }}
-                          className="font-mono text-[10px] text-[#00D4FF] uppercase px-2.5 py-0.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/30 font-semibold shadow-sm tracking-wide"
+                          className="font-mono text-[10px] text-[#0369A1] dark:text-[#00D4FF] uppercase px-2.5 py-0.5 rounded-full bg-[#0369A1]/10 dark:bg-[#00D4FF]/10 border border-[#0369A1]/30 dark:border-[#00D4FF]/30 font-semibold shadow-xs tracking-wide"
                         >
                           {group.footer}
                         </motion.span>
@@ -240,14 +243,14 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
                   </div>
 
                   {group.description && (
-                    <p className="text-xs text-[#8EA3BE] mb-4 leading-relaxed">
+                    <p className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] mb-4 leading-relaxed">
                       {group.description}
                     </p>
                   )}
 
-                  {/* Skill Badge Tags with elevated glow and floating Preview pill */}
+                  {/* Skill Tags */}
                   <div className="flex flex-wrap gap-2.5 pt-1 pb-4">
-                    {group.items.map((item: any, itemIdx: number) => (
+                    {group.items.map((item: { name: string; highlight?: boolean; bold?: boolean }, itemIdx: number) => (
                       <InteractiveSkillTag
                         key={itemIdx}
                         name={item.name}
@@ -260,13 +263,13 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
                 </div>
 
                 {/* Footer validation indicator */}
-                <div className="mt-6 pt-4 border-t border-[#203B5B]/40 flex items-center justify-between text-[11px] font-mono text-[#8EA3BE]">
+                <div className="mt-6 pt-4 border-t border-[#CBD6E6] dark:border-[#203B5B]/40 flex items-center justify-between text-[11px] font-mono text-[#4A5D78] dark:text-[#8EA3BE]">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400" />
                     <span>Verified in production code</span>
                   </span>
                   <motion.svg
-                    className="w-3.5 h-3.5 text-[#00D4FF]/60 group-hover:text-[#00D4FF] transition-colors"
+                    className="w-3.5 h-3.5 text-[#0369A1]/70 dark:text-[#00D4FF]/60 group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -281,29 +284,29 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
         </motion.div>
       </AnimatePresence>
 
-      {/* Engineering Philosophy callout with full motion */}
+      {/* Engineering Philosophy callout */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        whileHover={{ borderColor: "rgba(0, 212, 255, 0.4)" }}
-        className="mt-8 rounded-2xl bg-[#09182D] border border-[#203B5B] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-2xl relative overflow-hidden group"
+        whileHover={{ borderColor: isDark ? "rgba(0, 212, 255, 0.4)" : "rgba(3, 105, 161, 0.5)" }}
+        className="mt-8 rounded-2xl bg-white dark:bg-[#09182D] border border-[#CBD6E6] dark:border-[#203B5B] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-lg dark:shadow-2xl relative overflow-hidden group"
       >
         {/* Animated Scanline Shimmer */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00D4FF]/5 to-transparent pointer-events-none animate-scanline" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0369A1]/5 dark:via-[#00D4FF]/5 to-transparent pointer-events-none animate-scanline" />
 
         <div className="space-y-1.5 relative z-10">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-xs text-[#00D4FF] font-semibold tracking-wider uppercase">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-xs text-[#0369A1] dark:text-[#00D4FF] font-semibold tracking-wider uppercase">
               TESTING DISCIPLINE &amp; PRODUCTION INTEGRITY
             </span>
           </div>
-          <div className="text-lg sm:text-xl font-bold text-[#F5F8FF]">
+          <div className="text-lg sm:text-xl font-bold text-[#09111E] dark:text-[#F5F8FF]">
             238 Pytest regression test suites passing across edge inputs &amp; safety escalations.
           </div>
-          <p className="text-xs sm:text-sm text-[#8EA3BE] max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#4A5D78] dark:text-[#8EA3BE] max-w-2xl leading-relaxed">
             Software engineering fundamentals come first: typed Pydantic payloads, error boundary fallbacks, Dockerized deployment on Render Cloud, and deterministic safety filters.
           </p>
         </div>
@@ -314,9 +317,14 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ onOpenSkillPreview
             e.preventDefault();
             fastScrollTo("projects");
           }}
-          whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(0,212,255,0.4)" }}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: isDark
+              ? "0 0 25px rgba(0,212,255,0.4)"
+              : "0 12px 24px -6px rgba(3,105,161,0.35)",
+          }}
           whileTap={{ scale: 0.96 }}
-          className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#00D4FF] text-[#061329] font-mono font-bold text-xs transition-all cursor-pointer shadow-md relative z-10"
+          className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0369A1] hover:bg-[#075985] text-white dark:bg-[#00D4FF] dark:text-[#061329] dark:hover:bg-[#38bdf8] font-mono font-bold text-xs transition-all cursor-pointer shadow-md relative z-10"
         >
           <span>Explore Architecture Builds</span>
           <motion.span

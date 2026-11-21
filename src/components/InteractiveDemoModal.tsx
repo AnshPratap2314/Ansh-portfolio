@@ -195,7 +195,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#061329]/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 dark:bg-[#061329]/85 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -204,20 +204,20 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.2 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-4xl bg-[#0B1B34] border border-[#203B5B] rounded-2xl shadow-2xl overflow-hidden my-6 max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-4xl bg-white dark:bg-[#0B1B34] border border-[#CBD6E6] dark:border-[#203B5B] rounded-2xl shadow-2xl overflow-hidden my-6 max-h-[92vh] flex flex-col"
       >
         {/* Top Announcement Bar with Direct Live Cloud App Launch */}
         {liveUrl && (
-          <div className="bg-gradient-to-r from-[#00D4FF]/20 via-[#1677FF]/20 to-[#00D4FF]/20 border-b border-[#00D4FF]/30 px-4 py-2.5 flex items-center justify-between gap-3 text-xs font-mono">
-            <span className="flex items-center gap-2 text-[#00D4FF] font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+          <div className="bg-gradient-to-r from-[#0369A1]/15 via-[#1D4ED8]/15 to-[#0369A1]/15 dark:from-[#00D4FF]/20 dark:via-[#1677FF]/20 dark:to-[#00D4FF]/20 border-b border-[#0369A1]/25 dark:border-[#00D4FF]/30 px-4 py-2.5 flex items-center justify-between gap-3 text-xs font-mono">
+            <span className="flex items-center gap-2 text-[#0369A1] dark:text-[#00D4FF] font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-ping" />
               <span>OFFICIAL CLOUD DEPLOYMENT IS LIVE</span>
             </span>
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1 rounded bg-[#00D4FF] text-[#061329] font-bold hover:bg-[#38bdf8] transition-all flex items-center gap-1.5 shadow-[0_0_12px_rgba(0,212,255,0.4)]"
+              className="px-3 py-1 rounded bg-[#0369A1] hover:bg-[#075985] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold dark:hover:bg-[#38bdf8] transition-all flex items-center gap-1.5 shadow-sm shadow-[#0369A1]/25 dark:shadow-[0_0_12px_rgba(0,212,255,0.4)] shrink-0"
             >
               <span>Launch Live Site</span>
               <span>↗</span>
@@ -226,18 +226,18 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
         )}
 
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 bg-[#0D203B] border-b border-[#203B5B] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 sm:p-6 bg-[#EAF0F8] dark:bg-[#0D203B] border-b border-[#CBD6E6] dark:border-[#203B5B] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-[10px] font-bold text-[#00D4FF] bg-[#00D4FF]/10 px-2.5 py-0.5 rounded border border-[#00D4FF]/30 uppercase">
+              <span className="font-mono text-[10px] font-bold text-[#0369A1] dark:text-[#00D4FF] bg-[#0369A1]/10 dark:bg-[#00D4FF]/10 px-2.5 py-0.5 rounded border border-[#0369A1]/30 dark:border-[#00D4FF]/30 uppercase">
                 INTERACTIVE TESTING LAB
               </span>
-              <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400" />
                 ONLINE
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#F5F8FF]">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#09111E] dark:text-[#F5F8FF]">
               {projectId === "mindcare"
                 ? "MindCare AI — NLP Intent & Safety Pipeline"
                 : projectId === "interview"
@@ -252,12 +252,14 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
 
           <div className="flex items-center gap-2">
             {liveUrl && (
-              <div className="flex rounded-lg bg-[#061329] p-0.5 border border-[#203B5B]">
+              <div className="flex rounded-lg bg-white dark:bg-[#061329] p-0.5 border border-[#CBD6E6] dark:border-[#203B5B]">
                 <button
                   type="button"
                   onClick={() => setModalView("sandbox")}
-                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
-                    modalView === "sandbox" ? "bg-[#00D4FF] text-[#061329] font-bold" : "text-[#8EA3BE] hover:text-white"
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors cursor-pointer ${
+                    modalView === "sandbox"
+                      ? "bg-[#0369A1] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold"
+                      : "text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#09111E] dark:hover:text-white"
                   }`}
                 >
                   Sandbox
@@ -265,8 +267,10 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setModalView("liveWeb")}
-                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
-                    modalView === "liveWeb" ? "bg-[#00D4FF] text-[#061329] font-bold" : "text-[#8EA3BE] hover:text-white"
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors cursor-pointer ${
+                    modalView === "liveWeb"
+                      ? "bg-[#0369A1] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold"
+                      : "text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#09111E] dark:hover:text-white"
                   }`}
                 >
                   Live Web
@@ -277,7 +281,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-[#8EA3BE] hover:text-[#F5F8FF] bg-[#061329] border border-[#203B5B] rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#09111E] dark:hover:text-[#F5F8FF] bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] rounded-lg transition-colors cursor-pointer"
               aria-label="Close demo"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -288,31 +292,31 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-sm text-[#B4C3D8]">
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-sm text-[#2B3B52] dark:text-[#B4C3D8]">
           {/* TAB: EMBEDDED LIVE WEBVIEW */}
           {modalView === "liveWeb" && liveUrl ? (
             <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+              <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
                 <div>
-                  <div className="text-[#00D4FF] font-semibold flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="text-[#0369A1] dark:text-[#00D4FF] font-semibold flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
                     <span>TARGET DEPLOYMENT: {currentProject?.title}</span>
                   </div>
-                  <div className="text-[#8EA3BE] text-[11px] truncate mt-0.5">{liveUrl}</div>
+                  <div className="text-[#4A5D78] dark:text-[#8EA3BE] text-[11px] truncate mt-0.5">{liveUrl}</div>
                 </div>
 
                 <a
                   href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl bg-[#00D4FF] text-[#061329] font-bold hover:bg-[#38bdf8] transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,212,255,0.4)] shrink-0"
+                  className="px-4 py-2 rounded-xl bg-[#0369A1] hover:bg-[#075985] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold dark:hover:bg-[#38bdf8] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#0369A1]/25 dark:shadow-[0_0_15px_rgba(0,212,255,0.4)] shrink-0"
                 >
                   <span>Launch in New Window</span>
                   <span>↗</span>
                 </a>
               </div>
 
-              <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-[#203B5B] bg-[#061329]">
+              <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-[#CBD6E6] dark:border-[#203B5B] bg-white dark:bg-[#061329]">
                 <iframe
                   src={liveUrl}
                   title={`${currentProject?.title} Live Preview`}
@@ -322,7 +326,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                 />
               </div>
 
-              <p className="text-[11px] font-mono text-[#8EA3BE] text-center">
+              <p className="text-[11px] font-mono text-[#4A5D78] dark:text-[#8EA3BE] text-center">
                 Note: Some cloud providers (Render free spin-up / Vercel frame policy) restrict third-party iframe embedding. Click &quot;Launch in New Window ↗&quot; above for direct unrestricted access.
               </p>
             </div>
@@ -333,13 +337,13 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               {/* CASE 1: MINDCARE AI */}
               {projectId === "mindcare" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B] text-xs font-mono flex items-center justify-between">
-                    <span className="text-[#00D4FF]">MODEL: scikit-learn TF-IDF + LogisticRegression</span>
-                    <span className="text-emerald-400">SAFETY NEGATION GUARD: ACTIVE</span>
+                  <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-xs font-mono flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[#0369A1] dark:text-[#00D4FF] font-semibold">MODEL: scikit-learn TF-IDF + LogisticRegression</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">SAFETY NEGATION GUARD: ACTIVE</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-2">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-2">
                       Test User Input Utterance
                     </label>
                     <div className="flex flex-wrap gap-2 mb-3">
@@ -354,7 +358,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                           onClick={() => {
                             setMindcareInput(preset);
                           }}
-                          className="px-2.5 py-1 rounded bg-[#0D203B] hover:bg-[#163359] text-[11px] font-mono text-[#8EA3BE] hover:text-[#00D4FF] border border-[#203B5B] transition-colors cursor-pointer text-left line-clamp-1 max-w-xs"
+                          className="px-2.5 py-1 rounded bg-[#EAF0F8] hover:bg-[#DCE6F3] dark:bg-[#0D203B] dark:hover:bg-[#163359] text-[11px] font-mono text-[#2B3B52] dark:text-[#8EA3BE] hover:text-[#0369A1] dark:hover:text-[#00D4FF] border border-[#CBD6E6] dark:border-[#203B5B] transition-colors cursor-pointer text-left line-clamp-1 max-w-xs"
                         >
                           Sample {idx + 1}
                         </button>
@@ -365,7 +369,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                       rows={3}
                       value={mindcareInput}
                       onChange={(e) => setMindcareInput(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] focus:outline-none focus:border-[#00D4FF] font-sans resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF] font-sans resize-none"
                       placeholder="Enter a message to run through the NLP classifier and safety triage..."
                     />
 
@@ -374,11 +378,11 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                         type="button"
                         onClick={handleMindCareRun}
                         disabled={isClassifying}
-                        className="px-5 py-2.5 rounded-lg bg-[#00D4FF] hover:bg-[#38bdf8] text-[#061329] font-mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
+                        className="px-5 py-2.5 rounded-lg bg-[#0369A1] hover:bg-[#075985] dark:bg-[#00D4FF] dark:hover:bg-[#38bdf8] text-white dark:text-[#061329] font-mono text-xs font-bold transition-all shadow-md shadow-[#0369A1]/25 dark:shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
                       >
                         {isClassifying ? (
                           <>
-                            <span className="w-3.5 h-3.5 border-2 border-[#061329] border-t-transparent rounded-full animate-spin" />
+                            <span className="w-3.5 h-3.5 border-2 border-white dark:border-[#061329] border-t-transparent rounded-full animate-spin" />
                             <span>Classifying...</span>
                           </>
                         ) : (
@@ -394,31 +398,31 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                   </div>
 
                   {mindcareResult && (
-                    <div className="p-5 rounded-xl bg-[#08172E] border border-[#00D4FF]/40 space-y-4">
+                    <div className="p-5 rounded-xl bg-[#EAF0F8] dark:bg-[#08172E] border border-[#0369A1]/40 dark:border-[#00D4FF]/40 space-y-4">
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">DETECTED MOOD</div>
-                          <div className="font-bold text-[#00D4FF] mt-1">{mindcareResult.mood}</div>
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">DETECTED MOOD</div>
+                          <div className="font-bold text-[#0369A1] dark:text-[#00D4FF] mt-1">{mindcareResult.mood}</div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">TOPIC CLUSTER</div>
-                          <div className="font-bold text-[#F5F8FF] mt-1">{mindcareResult.topic}</div>
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">TOPIC CLUSTER</div>
+                          <div className="font-bold text-[#09111E] dark:text-[#F5F8FF] mt-1">{mindcareResult.topic}</div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">RISK ESCALATION</div>
-                          <div className="font-bold text-emerald-400 mt-1">{mindcareResult.riskLevel}</div>
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">RISK ESCALATION</div>
+                          <div className="font-bold text-emerald-700 dark:text-emerald-400 mt-1">{mindcareResult.riskLevel}</div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">PIPELINE LATENCY</div>
-                          <div className="font-bold text-amber-300 mt-1">{mindcareResult.latencyMs}ms</div>
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">PIPELINE LATENCY</div>
+                          <div className="font-bold text-amber-700 dark:text-amber-300 mt-1">{mindcareResult.latencyMs}ms</div>
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B]">
-                        <div className="font-mono text-xs text-[#00D4FF] font-bold uppercase mb-2">
+                      <div className="p-4 rounded-xl bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                        <div className="font-mono text-xs text-[#0369A1] dark:text-[#00D4FF] font-bold uppercase mb-2">
                           Generated Supportive Guidance
                         </div>
-                        <p className="text-sm text-[#F5F8FF] leading-relaxed">
+                        <p className="text-sm text-[#09111E] dark:text-[#F5F8FF] leading-relaxed">
                           {mindcareResult.response}
                         </p>
                       </div>
@@ -430,9 +434,9 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               {/* CASE 2: AI INTERVIEW SIMULATOR */}
               {projectId === "interview" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#8EA3BE]">SELECT ROLE TRACK:</span>
+                  <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[#4A5D78] dark:text-[#8EA3BE]">SELECT ROLE TRACK:</span>
                       {(["aiml", "backend", "genai"] as const).map((t) => (
                         <button
                           key={t}
@@ -445,33 +449,33 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                           }}
                           className={`px-2.5 py-1 rounded uppercase text-[10px] cursor-pointer transition-all ${
                             interviewTrack === t
-                              ? "bg-[#00D4FF] text-[#061329] font-bold"
-                              : "bg-[#0D203B] text-[#8EA3BE] border border-[#203B5B]"
+                              ? "bg-[#0369A1] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold"
+                              : "bg-white dark:bg-[#0D203B] text-[#4A5D78] dark:text-[#8EA3BE] border border-[#CBD6E6] dark:border-[#203B5B]"
                           }`}
                         >
                           {t === "aiml" ? "AI/ML Engineer" : t === "backend" ? "Python Backend" : "Generative AI"}
                         </button>
                       ))}
                     </div>
-                    <span className="text-[#00D4FF]">GEMINI 1.5 STRUCTURED OUTPUT</span>
+                    <span className="text-[#0369A1] dark:text-[#00D4FF] font-semibold">GEMINI 1.5 STRUCTURED OUTPUT</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#00D4FF] font-bold uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#0369A1] dark:text-[#00D4FF] font-bold uppercase mb-1">
                       Active Interview Prompt:
                     </label>
-                    <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] mb-3">
+                    <div className="p-3 rounded-lg bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] mb-3">
                       {interviewQuestion}
                     </div>
 
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1">
                       Candidate Response Submission:
                     </label>
                     <textarea
                       rows={4}
                       value={interviewAnswer}
                       onChange={(e) => setInterviewAnswer(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] focus:outline-none focus:border-[#00D4FF] font-sans resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF] font-sans resize-none"
                     />
 
                     <div className="mt-3 flex justify-end">
@@ -479,11 +483,11 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                         type="button"
                         onClick={handleInterviewEvaluate}
                         disabled={isEvaluating}
-                        className="px-5 py-2.5 rounded-lg bg-[#00D4FF] hover:bg-[#38bdf8] text-[#061329] font-mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
+                        className="px-5 py-2.5 rounded-lg bg-[#0369A1] hover:bg-[#075985] dark:bg-[#00D4FF] dark:hover:bg-[#38bdf8] text-white dark:text-[#061329] font-mono text-xs font-bold transition-all shadow-md shadow-[#0369A1]/25 dark:shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
                       >
                         {isEvaluating ? (
                           <>
-                            <span className="w-3.5 h-3.5 border-2 border-[#061329] border-t-transparent rounded-full animate-spin" />
+                            <span className="w-3.5 h-3.5 border-2 border-white dark:border-[#061329] border-t-transparent rounded-full animate-spin" />
                             <span>Evaluating via Structured Schema...</span>
                           </>
                         ) : (
@@ -499,51 +503,51 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                   </div>
 
                   {interviewFeedback && (
-                    <div className="p-5 rounded-xl bg-[#08172E] border border-[#00D4FF]/40 space-y-4">
+                    <div className="p-5 rounded-xl bg-[#EAF0F8] dark:bg-[#08172E] border border-[#0369A1]/40 dark:border-[#00D4FF]/40 space-y-4">
                       {/* Score Radar / Cards */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">OVERALL SCORE</div>
-                          <div className="text-2xl font-extrabold text-[#00D4FF] font-mono mt-1">
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">OVERALL SCORE</div>
+                          <div className="text-2xl font-extrabold text-[#0369A1] dark:text-[#00D4FF] font-mono mt-1">
                             {interviewFeedback.overallScore}%
                           </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">TECHNICAL DEPTH</div>
-                          <div className="text-2xl font-extrabold text-emerald-400 font-mono mt-1">
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">TECHNICAL DEPTH</div>
+                          <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono mt-1">
                             {interviewFeedback.depth}%
                           </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">CLARITY &amp; STRUCTURE</div>
-                          <div className="text-2xl font-extrabold text-amber-300 font-mono mt-1">
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">CLARITY &amp; STRUCTURE</div>
+                          <div className="text-2xl font-extrabold text-amber-700 dark:text-amber-300 font-mono mt-1">
                             {interviewFeedback.clarity}%
                           </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                          <div className="text-[10px] text-[#8EA3BE]">EFFICIENCY</div>
-                          <div className="text-2xl font-extrabold text-purple-400 font-mono mt-1">
+                        <div className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                          <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">EFFICIENCY</div>
+                          <div className="text-2xl font-extrabold text-purple-700 dark:text-purple-400 font-mono mt-1">
                             {interviewFeedback.efficiency}%
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-3 text-xs">
-                        <div className="font-mono text-[#00D4FF] font-bold">Key Strengths Recognized:</div>
+                        <div className="font-mono text-[#0369A1] dark:text-[#00D4FF] font-bold">Key Strengths Recognized:</div>
                         <ul className="space-y-1.5">
                           {interviewFeedback.strengths.map((str, i) => (
-                            <li key={i} className="text-[#F5F8FF] flex items-start gap-2">
-                              <span className="text-emerald-400">✓</span>
+                            <li key={i} className="text-[#09111E] dark:text-[#F5F8FF] flex items-start gap-2">
+                              <span className="text-emerald-700 dark:text-emerald-400 font-bold">✓</span>
                               <span>{str}</span>
                             </li>
                           ))}
                         </ul>
 
-                        <div className="font-mono text-amber-300 font-bold pt-2">Recommended Improvements:</div>
+                        <div className="font-mono text-amber-700 dark:text-amber-300 font-bold pt-2">Recommended Improvements:</div>
                         <ul className="space-y-1.5">
                           {interviewFeedback.improvements.map((imp, i) => (
-                            <li key={i} className="text-[#B4C3D8] flex items-start gap-2">
-                              <span className="text-amber-400">▹</span>
+                            <li key={i} className="text-[#2B3B52] dark:text-[#B4C3D8] flex items-start gap-2">
+                              <span className="text-amber-600 dark:text-amber-400">▹</span>
                               <span>{imp}</span>
                             </li>
                           ))}
@@ -557,9 +561,9 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               {/* CASE 3: STUDYVERSE AI */}
               {projectId === "studyverse" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#8EA3BE]">TUTOR MODE:</span>
+                  <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[#4A5D78] dark:text-[#8EA3BE]">TUTOR MODE:</span>
                       {(["socratic", "examprep", "beginner"] as const).map((mode) => (
                         <button
                           key={mode}
@@ -567,34 +571,34 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                           onClick={() => setStudyTutorMode(mode)}
                           className={`px-2.5 py-1 rounded capitalize text-[10px] cursor-pointer transition-all ${
                             studyTutorMode === mode
-                              ? "bg-[#00D4FF] text-[#061329] font-bold"
-                              : "bg-[#0D203B] text-[#8EA3BE] border border-[#203B5B]"
+                              ? "bg-[#0369A1] dark:bg-[#00D4FF] text-white dark:text-[#061329] font-bold"
+                              : "bg-white dark:bg-[#0D203B] text-[#4A5D78] dark:text-[#8EA3BE] border border-[#CBD6E6] dark:border-[#203B5B]"
                           }`}
                         >
                           {mode}
                         </button>
                       ))}
                     </div>
-                    <span className="text-emerald-400">DOCUMENT RETRIEVAL (RAG)</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">DOCUMENT RETRIEVAL (RAG)</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1">
                       Active Document Index:
                     </label>
-                    <div className="p-3 rounded-lg bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] mb-3 flex items-center justify-between">
+                    <div className="p-3 rounded-lg bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] mb-3 flex items-center justify-between">
                       <span>📄 Introduction to Quantum Computing &amp; Qubits</span>
-                      <span className="text-xs font-mono text-[#00D4FF]">15 pages indexed</span>
+                      <span className="text-xs font-mono text-[#0369A1] dark:text-[#00D4FF] font-semibold">15 pages indexed</span>
                     </div>
 
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1">
                       Ask AI Tutor:
                     </label>
                     <input
                       type="text"
                       value={studyQuery}
                       onChange={(e) => setStudyQuery(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] focus:outline-none focus:border-[#00D4FF]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF]"
                     />
 
                     <div className="mt-3 flex justify-end">
@@ -602,11 +606,11 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                         type="button"
                         onClick={handleStudyVerseRun}
                         disabled={isStudyGenerating}
-                        className="px-5 py-2.5 rounded-lg bg-[#00D4FF] hover:bg-[#38bdf8] text-[#061329] font-mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
+                        className="px-5 py-2.5 rounded-lg bg-[#0369A1] hover:bg-[#075985] dark:bg-[#00D4FF] dark:hover:bg-[#38bdf8] text-white dark:text-[#061329] font-mono text-xs font-bold transition-all shadow-md shadow-[#0369A1]/25 dark:shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer"
                       >
                         {isStudyGenerating ? (
                           <>
-                            <span className="w-3.5 h-3.5 border-2 border-[#061329] border-t-transparent rounded-full animate-spin" />
+                            <span className="w-3.5 h-3.5 border-2 border-white dark:border-[#061329] border-t-transparent rounded-full animate-spin" />
                             <span>Retrieving Chunks &amp; Answering...</span>
                           </>
                         ) : (
@@ -622,33 +626,33 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                   </div>
 
                   {studyResult && (
-                    <div className="p-5 rounded-xl bg-[#08172E] border border-[#00D4FF]/40 space-y-4">
-                      <div className="p-3.5 rounded-lg bg-[#061329] border border-[#203B5B]">
-                        <div className="text-[10px] font-mono text-[#00D4FF] uppercase mb-1">
+                    <div className="p-5 rounded-xl bg-[#EAF0F8] dark:bg-[#08172E] border border-[#0369A1]/40 dark:border-[#00D4FF]/40 space-y-4">
+                      <div className="p-3.5 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                        <div className="text-[10px] font-mono text-[#0369A1] dark:text-[#00D4FF] font-semibold uppercase mb-1">
                           Retrieved Document Passages (RAG):
                         </div>
                         {studyResult.retrievedChunks.map((c, i) => (
-                          <p key={i} className="text-xs text-[#8EA3BE] font-mono mb-1">
+                          <p key={i} className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] font-mono mb-1">
                             {c}
                           </p>
                         ))}
                       </div>
 
-                      <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B]">
-                        <div className="text-[11px] font-mono text-[#00D4FF] font-bold uppercase mb-1">
+                      <div className="p-4 rounded-xl bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                        <div className="text-[11px] font-mono text-[#0369A1] dark:text-[#00D4FF] font-bold uppercase mb-1">
                           AI Tutor Guidance ({studyTutorMode}):
                         </div>
-                        <p className="text-sm text-[#F5F8FF] leading-relaxed">
+                        <p className="text-sm text-[#09111E] dark:text-[#F5F8FF] leading-relaxed">
                           {studyResult.explanation}
                         </p>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {studyResult.flashcards.map((fc, i) => (
-                          <div key={i} className="p-3 rounded-lg bg-[#061329] border border-[#203B5B]">
-                            <div className="text-[10px] font-mono text-[#00D4FF]">FLASHCARD #{i + 1}</div>
-                            <div className="text-xs font-semibold text-[#F5F8FF] mt-1">Q: {fc.q}</div>
-                            <div className="text-xs text-emerald-400 mt-1">A: {fc.a}</div>
+                          <div key={i} className="p-3 rounded-lg bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
+                            <div className="text-[10px] font-mono text-[#0369A1] dark:text-[#00D4FF] font-semibold">FLASHCARD #{i + 1}</div>
+                            <div className="text-xs font-semibold text-[#09111E] dark:text-[#F5F8FF] mt-1">Q: {fc.q}</div>
+                            <div className="text-xs text-emerald-700 dark:text-emerald-400 mt-1 font-medium">A: {fc.a}</div>
                           </div>
                         ))}
                       </div>
@@ -660,12 +664,12 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               {/* CASE 4: PCA FACE RECOGNITION */}
               {projectId === "pca" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B]">
+                  <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B]">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-mono text-xs text-[#00D4FF] font-bold uppercase">
+                      <span className="font-mono text-xs text-[#0369A1] dark:text-[#00D4FF] font-bold uppercase">
                         Interactive Eigenface Dimension Explorer
                       </span>
-                      <span className="font-mono text-xs text-amber-300">
+                      <span className="font-mono text-xs text-amber-700 dark:text-amber-300 font-semibold">
                         k = {pcaK} components
                       </span>
                     </div>
@@ -676,9 +680,9 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                       max="100"
                       value={pcaK}
                       onChange={(e) => setPcaK(Number(e.target.value))}
-                      className="w-full h-2 bg-[#0D203B] rounded-lg appearance-none cursor-pointer accent-[#00D4FF]"
+                      className="w-full h-2 bg-[#CBD6E6] dark:bg-[#0D203B] rounded-lg appearance-none cursor-pointer accent-[#0369A1] dark:accent-[#00D4FF]"
                     />
-                    <div className="flex justify-between text-[10px] font-mono text-[#8EA3BE] mt-1">
+                    <div className="flex justify-between text-[10px] font-mono text-[#4A5D78] dark:text-[#8EA3BE] mt-1">
                       <span>k=5 (Heavy Compression)</span>
                       <span>k=50 (Balanced)</span>
                       <span>k=100 (High Fidelity)</span>
@@ -686,27 +690,27 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                    <div className="p-3 rounded-lg bg-[#08172E] border border-[#203B5B]">
-                      <div className="text-[10px] text-[#8EA3BE]">COMPRESSION RATIO</div>
-                      <div className="text-lg font-bold text-[#00D4FF] mt-1">
+                    <div className="p-3 rounded-lg bg-[#EAF0F8] dark:bg-[#08172E] border border-[#CBD6E6] dark:border-[#203B5B]">
+                      <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">COMPRESSION RATIO</div>
+                      <div className="text-lg font-bold text-[#0369A1] dark:text-[#00D4FF] mt-1">
                         {Math.round((1 - pcaK / 1024) * 100)}%
                       </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-[#08172E] border border-[#203B5B]">
-                      <div className="text-[10px] text-[#8EA3BE]">EXPLAINED VARIANCE</div>
-                      <div className="text-lg font-bold text-emerald-400 mt-1">
+                    <div className="p-3 rounded-lg bg-[#EAF0F8] dark:bg-[#08172E] border border-[#CBD6E6] dark:border-[#203B5B]">
+                      <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">EXPLAINED VARIANCE</div>
+                      <div className="text-lg font-bold text-emerald-700 dark:text-emerald-400 mt-1">
                         {Math.min(99.4, (55 + pcaK * 0.44)).toFixed(1)}%
                       </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-[#08172E] border border-[#203B5B]">
-                      <div className="text-[10px] text-[#8EA3BE]">RECONSTRUCTION MSE</div>
-                      <div className="text-lg font-bold text-amber-300 mt-1">
+                    <div className="p-3 rounded-lg bg-[#EAF0F8] dark:bg-[#08172E] border border-[#CBD6E6] dark:border-[#203B5B]">
+                      <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">RECONSTRUCTION MSE</div>
+                      <div className="text-lg font-bold text-amber-700 dark:text-amber-300 mt-1">
                         {(0.28 - pcaK * 0.0025).toFixed(3)}
                       </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-[#08172E] border border-[#203B5B]">
-                      <div className="text-[10px] text-[#8EA3BE]">CLASSIFIER ACCURACY</div>
-                      <div className="text-lg font-bold text-[#F5F8FF] mt-1">
+                    <div className="p-3 rounded-lg bg-[#EAF0F8] dark:bg-[#08172E] border border-[#CBD6E6] dark:border-[#203B5B]">
+                      <div className="text-[10px] text-[#4A5D78] dark:text-[#8EA3BE]">CLASSIFIER ACCURACY</div>
+                      <div className="text-lg font-bold text-[#09111E] dark:text-[#F5F8FF] mt-1">
                         {Math.min(96.8, (72 + pcaK * 0.26)).toFixed(1)}%
                       </div>
                     </div>
@@ -717,22 +721,22 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               {/* CASE 5: AISHIE ASSISTANT */}
               {projectId === "aishie" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-[#061329] border border-[#203B5B] text-xs font-mono flex items-center justify-between">
-                    <span className="text-[#00D4FF]">STATUS: LOCAL-FIRST PYTHON DAEMON</span>
-                    <span className="text-emerald-400">BIOMETRIC AUTH: ACTIVE</span>
+                  <div className="p-4 rounded-xl bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-xs font-mono flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[#0369A1] dark:text-[#00D4FF] font-semibold">STATUS: LOCAL-FIRST PYTHON DAEMON</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">BIOMETRIC AUTH: ACTIVE</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-[#08172E] border border-[#203B5B] font-mono text-xs space-y-2">
-                    <div className="text-[#8EA3BE]">// Active Camera Face Bounding Box</div>
-                    <div className="p-3 rounded bg-[#061329] text-emerald-400 flex items-center justify-between">
+                  <div className="p-4 rounded-xl bg-[#EAF0F8] dark:bg-[#08172E] border border-[#CBD6E6] dark:border-[#203B5B] font-mono text-xs space-y-2">
+                    <div className="text-[#4A5D78] dark:text-[#8EA3BE]">// Active Camera Face Bounding Box</div>
+                    <div className="p-3 rounded bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-transparent text-emerald-700 dark:text-emerald-400 flex flex-wrap items-center justify-between gap-2 font-semibold">
                       <span>[MATCH: Ansh Pratap (Confidence 98.7%)]</span>
-                      <span className="text-xs text-[#00D4FF]">GATEWAY UNLOCKED</span>
+                      <span className="text-xs text-[#0369A1] dark:text-[#00D4FF]">GATEWAY UNLOCKED</span>
                     </div>
-                    <div className="text-[#8EA3BE] pt-2">// Command Audio Pipeline</div>
-                    <div className="p-3 rounded bg-[#061329] text-[#F5F8FF]">
-                      &gt; "Open system telemetry and run test suite for MindCare"
+                    <div className="text-[#4A5D78] dark:text-[#8EA3BE] pt-2">// Command Audio Pipeline</div>
+                    <div className="p-3 rounded bg-white dark:bg-[#061329] border border-[#CBD6E6] dark:border-transparent text-[#09111E] dark:text-[#F5F8FF]">
+                      &gt; &quot;Open system telemetry and run test suite for MindCare&quot;
                     </div>
-                    <div className="text-[#8EA3BE] text-[11px] pt-1">
+                    <div className="text-[#4A5D78] dark:text-[#8EA3BE] text-[11px] pt-1">
                       Dispatched via local PyAutoGUI &amp; subprocess without external cloud connection.
                     </div>
                   </div>
@@ -743,19 +747,19 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 bg-[#0D203B] border-t border-[#203B5B] flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 sm:p-5 bg-[#EAF0F8] dark:bg-[#0D203B] border-t border-[#CBD6E6] dark:border-[#203B5B] flex flex-wrap items-center justify-between gap-3">
           {liveUrl ? (
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-mono text-[#00D4FF] hover:underline flex items-center gap-1 font-semibold"
+              className="text-xs font-mono text-[#0369A1] dark:text-[#00D4FF] hover:underline flex items-center gap-1 font-semibold"
             >
               <span>Direct Link: {liveUrl}</span>
               <span>↗</span>
             </a>
           ) : (
-            <div className="text-[11px] font-mono text-[#8EA3BE]">
+            <div className="text-[11px] font-mono text-[#4A5D78] dark:text-[#8EA3BE]">
               Local/Academic Build · Evaluation Included
             </div>
           )}
@@ -764,7 +768,7 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2 rounded-lg bg-[#061329] hover:bg-[#091D38] text-[#F5F8FF] border border-[#203B5B] font-mono text-xs font-semibold transition-colors cursor-pointer"
+              className="px-5 py-2 rounded-lg bg-white hover:bg-[#F4F7FB] dark:bg-[#061329] dark:hover:bg-[#091D38] text-[#09111E] dark:text-[#F5F8FF] border border-[#CBD6E6] dark:border-[#203B5B] font-mono text-xs font-semibold transition-colors cursor-pointer"
             >
               Close
             </button>

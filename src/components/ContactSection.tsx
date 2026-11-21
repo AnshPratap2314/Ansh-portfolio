@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import emailjs from "@emailjs/browser";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
+import { useTheme } from "../context/ThemeContext";
 
 export const ContactSection: React.FC = () => {
   const { profile } = PORTFOLIO_DATA;
+  const { isDark } = useTheme();
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -14,9 +16,10 @@ export const ContactSection: React.FC = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState<"success" | "activation_needed" | "error">("success");
   const [copiedMessage, setCopiedMessage] = useState(false);
   const [autoOpenMailClient, setAutoOpenMailClient] = useState(false);
+
+  const hoverBorderAccent = isDark ? "rgba(0, 212, 255, 0.4)" : "rgba(3, 105, 161, 0.55)";
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profile.email);
@@ -51,9 +54,6 @@ export const ContactSection: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    let delivered = false;
-
-    // 1. Attempt EmailJS if credentials exist or via public browser SDK
     const emailJsPublicKey = (import.meta as any).env?.VITE_EMAILJS_PUBLIC_KEY;
     const emailJsServiceId = (import.meta as any).env?.VITE_EMAILJS_SERVICE_ID || "service_portfolio";
     const emailJsTemplateId = (import.meta as any).env?.VITE_EMAILJS_TEMPLATE_ID || "template_portfolio";
@@ -73,17 +73,14 @@ export const ContactSection: React.FC = () => {
           },
           emailJsPublicKey
         );
-        delivered = true;
       } catch (err) {
         console.warn("EmailJS service note:", err);
       }
     }
 
-    // 2. Direct live dispatch to FormSubmit API using the user's verified token
     try {
-      // Using verified token hash so FormSubmit sends the normal message directly without activation emails
       const formSubmitEndpoint = "https://formsubmit.co/ajax/81db808612579089bc813d3752d5c1fa";
-      const response = await fetch(formSubmitEndpoint, {
+      await fetch(formSubmitEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,22 +97,20 @@ export const ContactSection: React.FC = () => {
           "Message": formData.message,
         }),
       });
-
-      const data = await response.json().catch(() => null);
-      if (response.ok || (data && data.success === "true")) {
-        delivered = true;
-        setSubmissionStatus("success");
-      }
     } catch (err) {
       console.warn("Direct form delivery note:", err);
     }
 
-    // 3. Optional auto-launch Gmail if chosen
     if (autoOpenMailClient) {
-      window.open(getGmailUrl(), "_blank", "noopener,noreferrer");
+      const a = document.createElement("a");
+      a.href = getGmailUrl();
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
-    setSubmissionStatus("success");
     setIsSubmitting(false);
     setFormSubmitted(true);
   };
@@ -123,7 +118,7 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-        {/* Left column: Direct info & context */}
+        {/* Left column */}
         <motion.div
           initial={{ opacity: 0, x: -25 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -133,31 +128,31 @@ export const ContactSection: React.FC = () => {
         >
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono text-xs font-semibold tracking-widest text-[#00D4FF] uppercase">
+              <span className="font-mono text-xs font-semibold tracking-widest text-[#0369A1] dark:text-[#00D4FF] uppercase">
                 07 — GET IN TOUCH
               </span>
-              <div className="h-px w-12 bg-[#00D4FF]/40" />
+              <div className="h-px w-12 bg-[#0369A1]/40 dark:bg-[#00D4FF]/40" />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F5F8FF] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#09111E] dark:text-[#F5F8FF] tracking-tight">
               Let&apos;s build something intelligent.
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-[#B4C3D8] leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base text-[#2B3B52] dark:text-[#B4C3D8] leading-relaxed">
               I am actively seeking AI/ML engineering, Generative AI, Python backend, or software development internships and entry-level positions. Whether you have an open requisition, a project to discuss, or just want to talk system architecture, I respond quickly.
             </p>
           </div>
 
-          {/* Quick status pill */}
+          {/* Quick availability banner */}
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="p-4 rounded-xl bg-[#0A1930] border border-[#203B5B] flex items-center gap-3.5"
+            className="p-4 rounded-xl bg-white dark:bg-[#0A1930] border border-[#CBD6E6] dark:border-[#203B5B] flex items-center gap-3.5 shadow-sm"
           >
             <div className="relative flex h-3 w-3 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-600 dark:bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600 dark:bg-emerald-500"></span>
             </div>
             <div className="text-xs">
-              <div className="font-semibold text-[#F5F8FF]">Currently Available</div>
-              <div className="text-[#8EA3BE] font-mono">4th Year Final Year Student · Open to full-time entry level &amp; internships (Remote or On-site)</div>
+              <div className="font-semibold text-[#09111E] dark:text-[#F5F8FF]">Currently Available</div>
+              <div className="text-[#4A5D78] dark:text-[#8EA3BE] font-mono">4th Year Final Year Student · Open to full-time entry level &amp; internships (Remote or On-site)</div>
             </div>
           </motion.div>
 
@@ -165,21 +160,21 @@ export const ContactSection: React.FC = () => {
           <div className="space-y-3.5">
             {/* Email item */}
             <motion.div
-              whileHover={{ x: 4, borderColor: "rgba(0, 212, 255, 0.4)" }}
-              className="p-4 rounded-xl bg-[#0D203B] border border-[#203B5B] flex items-center justify-between group transition-colors"
+              whileHover={{ x: 4, borderColor: hoverBorderAccent }}
+              className="p-4 rounded-xl bg-white dark:bg-[#0D203B] border border-[#CBD6E6] dark:border-[#203B5B] flex items-center justify-between group transition-colors shadow-sm"
             >
               <a
                 href={`mailto:${profile.email}`}
                 className="flex items-center gap-3.5 flex-1 min-w-0 mr-2"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#061329] border border-[#00D4FF]/30 flex items-center justify-center text-[#00D4FF] shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-[#EAF0F8] dark:bg-[#061329] border border-[#0369A1]/25 dark:border-[#00D4FF]/30 flex items-center justify-center text-[#0369A1] dark:text-[#00D4FF] shrink-0">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs text-[#8EA3BE] font-mono">EMAIL ADDRESS</div>
-                  <div className="text-sm font-semibold text-[#F5F8FF] font-mono truncate group-hover:text-[#00D4FF] transition-colors">
+                  <div className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] font-mono">EMAIL ADDRESS</div>
+                  <div className="text-sm font-semibold text-[#09111E] dark:text-[#F5F8FF] font-mono truncate group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors">
                     {profile.email}
                   </div>
                 </div>
@@ -189,7 +184,7 @@ export const ContactSection: React.FC = () => {
                   href={`https://mail.google.com/mail/?view=cm&fs=1&to=${profile.email}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2.5 py-1.5 rounded text-[11px] font-mono bg-[#061329] text-[#00D4FF] border border-[#203B5B] hover:border-[#00D4FF]/60 transition-colors cursor-pointer"
+                  className="px-2.5 py-1.5 rounded text-[11px] font-mono bg-[#EAF0F8] dark:bg-[#061329] text-[#0369A1] dark:text-[#00D4FF] border border-[#CBD6E6] dark:border-[#203B5B] hover:border-[#0369A1] dark:hover:border-[#00D4FF]/60 transition-colors cursor-pointer font-semibold"
                   title="Open directly in Gmail"
                 >
                   Gmail ↗
@@ -197,7 +192,7 @@ export const ContactSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="px-2.5 py-1.5 rounded text-[11px] font-mono bg-[#061329] text-[#B4C3D8] border border-[#203B5B] hover:text-white transition-colors cursor-pointer"
+                  className="px-2.5 py-1.5 rounded text-[11px] font-mono bg-[#EAF0F8] dark:bg-[#061329] text-[#2B3B52] dark:text-[#B4C3D8] border border-[#CBD6E6] dark:border-[#203B5B] hover:text-[#09111E] dark:hover:text-white transition-colors cursor-pointer"
                 >
                   {copiedEmail ? "Copied!" : "Copy"}
                 </button>
@@ -209,23 +204,23 @@ export const ContactSection: React.FC = () => {
               href={profile.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ x: 4, borderColor: "rgba(0, 212, 255, 0.4)" }}
-              className="p-4 rounded-xl bg-[#0D203B] border border-[#203B5B] flex items-center justify-between group transition-colors"
+              whileHover={{ x: 4, borderColor: hoverBorderAccent }}
+              className="p-4 rounded-xl bg-white dark:bg-[#0D203B] border border-[#CBD6E6] dark:border-[#203B5B] flex items-center justify-between group transition-colors shadow-sm"
             >
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-[#061329] border border-[#00D4FF]/30 flex items-center justify-center text-[#00D4FF]">
+                <div className="w-10 h-10 rounded-lg bg-[#EAF0F8] dark:bg-[#061329] border border-[#0369A1]/25 dark:border-[#00D4FF]/30 flex items-center justify-center text-[#0369A1] dark:text-[#00D4FF]">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs text-[#8EA3BE] font-mono">LINKEDIN PROFILE</div>
-                  <div className="text-sm font-semibold text-[#F5F8FF] group-hover:text-[#00D4FF] transition-colors">
+                  <div className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] font-mono">LINKEDIN PROFILE</div>
+                  <div className="text-sm font-semibold text-[#09111E] dark:text-[#F5F8FF] group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors">
                     ansh-pratap-68156625b
                   </div>
                 </div>
               </div>
-              <svg className="w-4 h-4 text-[#8EA3BE] group-hover:text-[#00D4FF] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[#4A5D78] dark:text-[#8EA3BE] group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </motion.a>
@@ -235,23 +230,23 @@ export const ContactSection: React.FC = () => {
               href={profile.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ x: 4, borderColor: "rgba(0, 212, 255, 0.4)" }}
-              className="p-4 rounded-xl bg-[#0D203B] border border-[#203B5B] flex items-center justify-between group transition-colors"
+              whileHover={{ x: 4, borderColor: hoverBorderAccent }}
+              className="p-4 rounded-xl bg-white dark:bg-[#0D203B] border border-[#CBD6E6] dark:border-[#203B5B] flex items-center justify-between group transition-colors shadow-sm"
             >
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-[#061329] border border-[#00D4FF]/30 flex items-center justify-center text-[#00D4FF]">
+                <div className="w-10 h-10 rounded-lg bg-[#EAF0F8] dark:bg-[#061329] border border-[#0369A1]/25 dark:border-[#00D4FF]/30 flex items-center justify-center text-[#0369A1] dark:text-[#00D4FF]">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs text-[#8EA3BE] font-mono">GITHUB REPOSITORIES</div>
-                  <div className="text-sm font-semibold text-[#F5F8FF] group-hover:text-[#00D4FF] transition-colors">
+                  <div className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] font-mono">GITHUB REPOSITORIES</div>
+                  <div className="text-sm font-semibold text-[#09111E] dark:text-[#F5F8FF] group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors">
                     @AnshPratap2314
                   </div>
                 </div>
               </div>
-              <svg className="w-4 h-4 text-[#8EA3BE] group-hover:text-[#00D4FF] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[#4A5D78] dark:text-[#8EA3BE] group-hover:text-[#0369A1] dark:group-hover:text-[#00D4FF] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </motion.a>
@@ -266,25 +261,25 @@ export const ContactSection: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="lg:col-span-7"
         >
-          <div className="rounded-2xl bg-[#0D203B] border border-[#203B5B] p-6 sm:p-8 shadow-xl relative">
-            {/* Top Cyan Accent Beam */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00D4FF]/60 to-transparent" />
+          <div className="rounded-2xl bg-white dark:bg-[#0D203B] border border-[#CBD6E6] dark:border-[#203B5B] p-6 sm:p-8 shadow-lg dark:shadow-xl relative overflow-hidden">
+            {/* Top Accent Beam */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#0369A1]/70 dark:via-[#00D4FF]/60 to-transparent" />
 
             <div className="flex items-center justify-between mb-1">
-              <h3 className="text-xl font-bold text-[#F5F8FF]">
+              <h3 className="text-xl font-bold text-[#09111E] dark:text-[#F5F8FF]">
                 Send a Direct Message
               </h3>
               <a
                 href={getGmailUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-1 text-xs font-mono text-[#00D4FF] hover:underline"
+                className="hidden sm:inline-flex items-center gap-1 text-xs font-mono text-[#0369A1] dark:text-[#00D4FF] hover:underline font-semibold"
               >
                 <span>Compose in Gmail ↗</span>
               </a>
             </div>
-            <p className="text-xs text-[#8EA3BE] mb-6">
-              Delivered directly to <span className="text-[#00D4FF] font-mono">{profile.email}</span>.
+            <p className="text-xs text-[#4A5D78] dark:text-[#8EA3BE] mb-6">
+              Delivered directly to <span className="text-[#0369A1] dark:text-[#00D4FF] font-mono font-medium">{profile.email}</span>.
             </p>
 
             {formSubmitted ? (
@@ -293,25 +288,24 @@ export const ContactSection: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="py-8 text-center space-y-4"
               >
-                <div className="w-16 h-16 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-full bg-emerald-600/10 dark:bg-emerald-400/10 border border-emerald-600/30 dark:border-emerald-400/30 text-emerald-700 dark:text-emerald-400 flex items-center justify-center mx-auto">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
 
-                <h4 className="text-xl font-bold text-[#F5F8FF]">Message Dispatched Successfully!</h4>
-                
-                <p className="text-xs sm:text-sm text-[#B4C3D8] max-w-md mx-auto leading-relaxed">
-                  Thank you for reaching out, <strong className="text-white">{formData.name || "there"}</strong>. Your inquiry has been routed to Ansh at <span className="text-[#00D4FF] font-mono">{profile.email}</span>. You will hear back promptly.
+                <h4 className="text-xl font-bold text-[#09111E] dark:text-[#F5F8FF]">Message Dispatched Successfully!</h4>
+
+                <p className="text-xs sm:text-sm text-[#2B3B52] dark:text-[#B4C3D8] max-w-md mx-auto leading-relaxed">
+                  Thank you for reaching out, <strong className="text-[#09111E] dark:text-white">{formData.name || "there"}</strong>. Your inquiry has been routed to Ansh at <span className="text-[#0369A1] dark:text-[#00D4FF] font-mono">{profile.email}</span>. You will hear back promptly.
                 </p>
 
-                {/* Direct 1-Click Send via Email Clients */}
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
                     href={getGmailUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#00D4FF] text-[#061329] font-mono font-bold text-xs shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:bg-[#38bdf8] transition-all cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0369A1] text-white dark:bg-[#00D4FF] dark:text-[#061329] font-mono font-bold text-xs shadow-md dark:shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:bg-[#075985] dark:hover:bg-[#38bdf8] transition-all cursor-pointer"
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
@@ -321,7 +315,7 @@ export const ContactSection: React.FC = () => {
 
                   <a
                     href={getMailtoUrl()}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#061329] text-[#F5F8FF] border border-[#203B5B] hover:border-[#00D4FF]/60 font-mono text-xs hover:text-[#00D4FF] transition-all cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#EAF0F8] dark:bg-[#061329] text-[#09111E] dark:text-[#F5F8FF] border border-[#CBD6E6] dark:border-[#203B5B] hover:border-[#0369A1] dark:hover:border-[#00D4FF]/60 font-mono text-xs hover:text-[#0369A1] dark:hover:text-[#00D4FF] transition-all cursor-pointer"
                   >
                     <span>Open in Mail App ↗</span>
                   </a>
@@ -329,7 +323,7 @@ export const ContactSection: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleCopyFullMessage}
-                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#061329] text-[#8EA3BE] border border-[#203B5B] hover:text-white font-mono text-xs transition-all cursor-pointer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#EAF0F8] dark:bg-[#061329] text-[#4A5D78] dark:text-[#8EA3BE] border border-[#CBD6E6] dark:border-[#203B5B] hover:text-[#09111E] dark:hover:text-white font-mono text-xs transition-all cursor-pointer"
                   >
                     {copiedMessage ? "Copied to Clipboard!" : "Copy Full Message"}
                   </button>
@@ -341,7 +335,7 @@ export const ContactSection: React.FC = () => {
                       setFormSubmitted(false);
                       setFormData({ name: "", email: "", roleType: "AI/ML Engineering Role", message: "" });
                     }}
-                    className="text-xs font-mono text-[#8EA3BE] hover:text-[#00D4FF] underline cursor-pointer"
+                    className="text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#0369A1] dark:hover:text-[#00D4FF] underline cursor-pointer"
                   >
                     Send another message
                   </button>
@@ -349,9 +343,8 @@ export const ContactSection: React.FC = () => {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Topic selection chips */}
                 <div>
-                  <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-2">
+                  <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-2 font-semibold">
                     Topic / Opportunity Type
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -369,8 +362,8 @@ export const ContactSection: React.FC = () => {
                         onClick={() => setFormData({ ...formData, roleType: type })}
                         className={`px-3 py-1.5 rounded text-xs font-mono transition-all cursor-pointer ${
                           formData.roleType === type
-                            ? "bg-[#00D4FF]/20 text-[#00D4FF] border border-[#00D4FF]/50 font-bold"
-                            : "bg-[#061329] text-[#8EA3BE] border border-[#203B5B] hover:text-[#F5F8FF]"
+                            ? "bg-[#0369A1]/15 dark:bg-[#00D4FF]/20 text-[#0369A1] dark:text-[#00D4FF] border border-[#0369A1] dark:border-[#00D4FF]/50 font-bold"
+                            : "bg-[#F4F7FB] dark:bg-[#061329] text-[#4A5D78] dark:text-[#8EA3BE] border border-[#CBD6E6] dark:border-[#203B5B] hover:text-[#09111E] dark:hover:text-[#F5F8FF]"
                         }`}
                       >
                         {type}
@@ -381,7 +374,7 @@ export const ContactSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1 font-semibold">
                       Your Name *
                     </label>
                     <input
@@ -390,12 +383,12 @@ export const ContactSection: React.FC = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Jane Doe"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#00D4FF] transition-colors"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] placeholder-[#64748B] dark:placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                    <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1 font-semibold">
                       Your Email *
                     </label>
                     <input
@@ -404,13 +397,13 @@ export const ContactSection: React.FC = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="e.g. jane@company.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#00D4FF] transition-colors"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] placeholder-[#64748B] dark:placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF] transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-[#8EA3BE] uppercase mb-1">
+                  <label className="block text-xs font-mono text-[#4A5D78] dark:text-[#8EA3BE] uppercase mb-1 font-semibold">
                     Message / Position Details *
                   </label>
                   <textarea
@@ -419,17 +412,17 @@ export const ContactSection: React.FC = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your role, team, or project requirements..."
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#061329] border border-[#203B5B] text-sm text-[#F5F8FF] placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#00D4FF] transition-colors resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#F4F7FB] dark:bg-[#061329] border border-[#CBD6E6] dark:border-[#203B5B] text-sm text-[#09111E] dark:text-[#F5F8FF] placeholder-[#64748B] dark:placeholder-[#8EA3BE]/50 focus:outline-none focus:border-[#0369A1] dark:focus:border-[#00D4FF] transition-colors resize-none"
                   />
                 </div>
 
                 <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <label className="flex items-center gap-2 cursor-pointer text-[11px] font-mono text-[#8EA3BE] hover:text-[#00D4FF] transition-colors select-none">
+                  <label className="flex items-center gap-2 cursor-pointer text-[11px] font-mono text-[#4A5D78] dark:text-[#8EA3BE] hover:text-[#0369A1] dark:hover:text-[#00D4FF] transition-colors select-none">
                     <input
                       type="checkbox"
                       checked={autoOpenMailClient}
                       onChange={(e) => setAutoOpenMailClient(e.target.checked)}
-                      className="rounded border-[#203B5B] bg-[#061329] text-[#00D4FF] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                      className="rounded border-[#CBD6E6] dark:border-[#203B5B] bg-white dark:bg-[#061329] text-[#0369A1] dark:text-[#00D4FF] focus:ring-0 focus:ring-offset-0 cursor-pointer"
                     />
                     <span>Also open Gmail draft in new tab</span>
                   </label>
@@ -439,7 +432,7 @@ export const ContactSection: React.FC = () => {
                       href={getGmailUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3.5 py-2.5 rounded-lg bg-[#061329] hover:bg-[#0c1f38] text-[#00D4FF] border border-[#00D4FF]/40 font-mono text-xs transition-all flex items-center gap-1.5 shadow-sm"
+                      className="px-3.5 py-2.5 rounded-lg bg-[#EAF0F8] hover:bg-[#DFE8F4] dark:bg-[#061329] dark:hover:bg-[#0c1f38] text-[#0369A1] dark:text-[#00D4FF] border border-[#0369A1]/40 dark:border-[#00D4FF]/40 font-mono text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
                       title="Open and send directly from your personal Gmail"
                     >
                       <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -451,13 +444,18 @@ export const ContactSection: React.FC = () => {
                     <motion.button
                       type="submit"
                       disabled={isSubmitting}
-                      whileHover={{ scale: 1.04, boxShadow: "0 0 25px rgba(0,212,255,0.4)" }}
+                      whileHover={{
+                        scale: 1.04,
+                        boxShadow: isDark
+                          ? "0 0 25px rgba(0,212,255,0.4)"
+                          : "0 12px 24px -6px rgba(3,105,161,0.35)",
+                      }}
                       whileTap={{ scale: 0.96 }}
-                      className="px-6 py-2.5 rounded-lg bg-[#00D4FF] hover:bg-[#38bdf8] text-[#061329] font-mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                      className="px-6 py-2.5 rounded-lg bg-[#0369A1] hover:bg-[#075985] text-white dark:bg-[#00D4FF] dark:hover:bg-[#38bdf8] dark:text-[#061329] font-mono text-xs font-bold transition-all shadow-md shadow-[#0369A1]/20 dark:shadow-[0_0_20px_rgba(0,212,255,0.4)] flex items-center gap-2 cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
-                          <span className="w-3.5 h-3.5 border-2 border-[#061329] border-t-transparent rounded-full animate-spin" />
+                          <span className="w-3.5 h-3.5 border-2 border-white dark:border-[#061329] border-t-transparent rounded-full animate-spin" />
                           <span>Sending Message...</span>
                         </>
                       ) : (

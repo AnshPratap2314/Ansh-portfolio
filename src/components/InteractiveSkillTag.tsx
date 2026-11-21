@@ -44,17 +44,17 @@ export const InteractiveSkillTag: React.FC<InteractiveSkillTagProps> = ({
         transition={{ duration: 0.18, ease: "easeOut" }}
         className={`relative z-20 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer select-none ${
           isHovered
-            ? "border-[#00D4FF] text-white bg-[#0A1930] shadow-[0_12px_24px_-4px_rgba(0,212,255,0.65),0_4px_12px_rgba(0,212,255,0.35)]"
+            ? "border border-[#0369A1] dark:border-[#00D4FF] text-[#09111E] dark:text-white bg-[#EAF0F8] dark:bg-[#0A1930] shadow-[0_10px_20px_-6px_rgba(3,105,161,0.32)] dark:shadow-[0_12px_24px_-4px_rgba(0,212,255,0.65),0_4px_12px_rgba(0,212,255,0.35)]"
             : highlight
-            ? "bg-[#00D4FF]/15 text-[#00D4FF] border border-[#00D4FF]/45 font-semibold shadow-[0_0_12px_rgba(0,212,255,0.15)]"
-            : "bg-[#061329] text-[#B4C3D8] border border-[#203B5B]/85 hover:border-[#00D4FF]/60 hover:text-white"
+            ? "bg-[#0369A1]/10 dark:bg-[#00D4FF]/15 text-[#0369A1] dark:text-[#00D4FF] border border-[#0369A1]/35 dark:border-[#00D4FF]/45 font-semibold shadow-xs dark:shadow-[0_0_12px_rgba(0,212,255,0.15)]"
+            : "bg-[#F4F7FB] dark:bg-[#061329] text-[#2B3B52] dark:text-[#B4C3D8] border border-[#CBD6E6] dark:border-[#203B5B]/85 hover:border-[#0369A1] dark:hover:border-[#00D4FF]/60 hover:text-[#09111E] dark:hover:text-white"
         } ${bold ? "font-bold" : ""}`}
       >
         {highlight && (
           <motion.span
             animate={{ rotate: isHovered ? 180 : 0 }}
             transition={{ duration: 0.4 }}
-            className="text-[10px] text-[#00D4FF]"
+            className="text-[10px] text-[#0369A1] dark:text-[#00D4FF]"
           >
             ✦
           </motion.span>
@@ -62,7 +62,7 @@ export const InteractiveSkillTag: React.FC<InteractiveSkillTagProps> = ({
         <span>{name}</span>
       </motion.button>
 
-      {/* Floating Preview Pill underneath when hovered */}
+      {/* Floating Preview Popover underneath when hovered */}
       <AnimatePresence>
         {isHovered && (
           <motion.div
@@ -73,9 +73,9 @@ export const InteractiveSkillTag: React.FC<InteractiveSkillTagProps> = ({
             onClick={handleClick}
             className="absolute -bottom-7 left-1/2 -translate-x-1/2 z-40 pointer-events-auto cursor-pointer hidden sm:block"
           >
-            <div className="bg-[#E2EDF8] hover:bg-white text-[#061329] text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-md shadow-xl border border-white/70 select-none whitespace-nowrap transition-transform hover:scale-105 active:scale-95 flex items-center gap-1">
+            <div className="bg-[#09111E] dark:bg-[#E2EDF8] hover:bg-[#0369A1] dark:hover:bg-white text-white dark:text-[#061329] text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-md shadow-xl border border-[#0369A1]/40 dark:border-white/70 select-none whitespace-nowrap transition-transform hover:scale-105 active:scale-95 flex items-center gap-1">
               <span>Preview</span>
-              <span className="text-[10px] text-[#00D4FF] font-bold">↗</span>
+              <span className="text-[10px] text-[#38BDF8] dark:text-[#00D4FF] font-bold">↗</span>
             </div>
           </motion.div>
         )}

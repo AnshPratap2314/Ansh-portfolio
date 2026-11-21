@@ -18,12 +18,15 @@ import { CaseStudyModal } from "./components/CaseStudyModal";
 import { InteractiveDemoModal } from "./components/InteractiveDemoModal";
 import { ResumeModal } from "./components/ResumeModal";
 import { SkillPreviewModal } from "./components/SkillPreviewModal";
+import { ReadmeModal, type ReadmeTarget } from "./components/ReadmeModal";
+import { ThemeProvider } from "./context/ThemeContext";
 import { fastScrollTo } from "./utils/scrollHelper";
 
-export default function App() {
+function PortfolioContent() {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<string | null>(null);
   const [selectedDemo, setSelectedDemo] = useState<string | null>(null);
   const [selectedSkillPreview, setSelectedSkillPreview] = useState<string | null>(null);
+  const [selectedReadme, setSelectedReadme] = useState<ReadmeTarget | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
 
   const handleOpenContact = () => {
@@ -31,12 +34,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#061329] text-[#F5F8FF] selection:bg-[#00D4FF]/30 selection:text-[#00D4FF] relative overflow-x-hidden font-sans">
-      {/* Background GPU-accelerated radial ambient lights (Zero frame drop) */}
+    <div className="min-h-screen bg-[#F4F7FB] dark:bg-[#061329] text-[#09111E] dark:text-[#F5F8FF] selection:bg-[#0369A1]/20 selection:text-[#0369A1] dark:selection:bg-[#00D4FF]/30 dark:selection:text-[#00D4FF] relative overflow-x-hidden font-sans transition-colors duration-200">
+      {/* Background GPU-accelerated radial ambient lights (theme-adapted) */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(0,212,255,0.06)_0%,transparent_70%)]" />
-        <div className="absolute top-1/3 right-10 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(0,85,255,0.06)_0%,transparent_70%)]" />
-        <div className="absolute bottom-1/4 left-10 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(0,212,255,0.05)_0%,transparent_70%)]" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(3,105,161,0.06)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(0,212,255,0.06)_0%,transparent_70%)]" />
+        <div className="absolute top-1/3 right-10 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(29,78,216,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(0,85,255,0.06)_0%,transparent_70%)]" />
+        <div className="absolute bottom-1/4 left-10 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(3,105,161,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(0,212,255,0.05)_0%,transparent_70%)]" />
       </div>
 
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -56,6 +59,7 @@ export default function App() {
             onOpenCaseStudy={(id) => setSelectedCaseStudy(id)}
             onOpenDemo={(id) => setSelectedDemo(id)}
             onOpenSkillPreview={(name) => setSelectedSkillPreview(name)}
+            onOpenReadme={(target) => setSelectedReadme(target)}
           />
           <ExperienceEducationSection onOpenSkillPreview={(name) => setSelectedSkillPreview(name)} />
           <DeveloperStatsSection />
@@ -93,7 +97,20 @@ export default function App() {
             setSelectedDemo(id);
           }}
         />
+
+        <ReadmeModal
+          target={selectedReadme}
+          onClose={() => setSelectedReadme(null)}
+        />
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <PortfolioContent />
+    </ThemeProvider>
   );
 }
